@@ -54,5 +54,12 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# To generate React components
 gem 'react-rails'
+
+# Formatting Ruby code
 gem 'prettier'
+
+# For user authentication
+gem 'devise'

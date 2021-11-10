@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: unset;
+  font-family: "Arvo";
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 100%;
+  max-height: 100%;
+  min-height: 100%;
+  width: 960px;
+  margin: 0 auto;
+  padding-top: 48px;
+}
