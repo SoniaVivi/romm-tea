@@ -6,6 +6,7 @@ import starFill from "svgs/starFill.svg";
 import starOutline from "svgs/starOutline.svg";
 import thermometer from "svgs/thermometer.svg";
 import clock from "svgs/clock.svg";
+import TrimmedLink from "./TrimmedLink";
 
 const PostBody = styled.div`
   display: flex;
@@ -64,6 +65,7 @@ const TagContainer = styled.div`
     margin: 0 2px;
     margin-bottom: 5px;
     padding: 0 4px;
+    padding-bottom: 2px;
     border: 1px solid ${({ theme }) => theme.postColor};
     border-radius: 5px;
     background-color: #e4ffe1;
@@ -112,7 +114,9 @@ const Post = (props) => {
         </Field>
         <Field>{price}</Field>
         <p>{data.notes}</p>
-        <Field>{data.link}</Field>
+        <Field>
+          <TrimmedLink href={data.link} />
+        </Field>
         <TagContainer>
           {[...data.tags]
             .sort((a, b) => a.localeCompare(b))

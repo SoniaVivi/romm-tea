@@ -9,7 +9,7 @@ const theme = {
   text: "#000000",
   background: "#f5f5f5",
   postColor: "#ffffff",
-  borderColor: "#000000",
+  borderColor: "#ffffff",
 };
 
 const Index = (props) => {
