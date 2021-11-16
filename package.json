@@ -28,7 +28,7 @@
     "@prettier/plugin-ruby": "^2.0.0",
     "babel-plugin-styled-components": "^1.13.3",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "webpack-dev-server": "^3"
   }
 }

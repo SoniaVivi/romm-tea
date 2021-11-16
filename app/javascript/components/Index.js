@@ -9,7 +9,11 @@ const theme = {
   text: "#000000",
   background: "#f5f5f5",
   postColor: "#ffffff",
-  borderColor: "#ffffff",
+  borderColor: "#edeff1",
+  postSideMargin: "5",
+  postSidePadding: "10",
+  postMarginBottom: "margin-bottom: 15px;",
+  hover: "rgba(85, 205, 252, 0.4)",
 };
 
 const Index = (props) => {

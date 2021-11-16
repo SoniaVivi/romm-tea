@@ -12,13 +12,11 @@ const PostBody = styled.div`
   display: flex;
   flex-flow: column nowrap;
   max-width: 100%;
-  width: calc(33% - 30px);
-  margin: 0 5px;
-  margin-bottom: 15px;
-  padding: 8px 10px;
+  width: calc(33% - 10px);
+  margin: 0 ${({ theme }) => theme.postSideMargin}px;
+  ${({ theme }) => theme.postMarginBottom}
+  padding: 8px ${({ theme }) => theme.postSidePadding}px;
   border: 1px solid ${({ theme }) => theme.borderColor};
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.postColor};
 `;
 
 const Field = styled.div`
@@ -56,20 +54,6 @@ const TagContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-left: -2px;
-
-  * {
-    display: flex;
-    align-items: center;
-    width: fit-content;
-    height: 26px;
-    margin: 0 2px;
-    margin-bottom: 5px;
-    padding: 0 4px;
-    padding-bottom: 2px;
-    border: 1px solid ${({ theme }) => theme.postColor};
-    border-radius: 5px;
-    background-color: #e4ffe1;
-  }
 `;
 
 const Post = (props) => {
@@ -90,9 +74,12 @@ const Post = (props) => {
       })();
 
     return (
-      <PostBody>
+      <PostBody className="background-post">
         <Field>
           <h3>{data.name}</h3>
+        </Field>
+        <Field>
+          <span>{new Date(data.posted).toUTCString()}</span>
         </Field>
         <Field>
           {Array(5)
@@ -121,7 +108,9 @@ const Post = (props) => {
           {[...data.tags]
             .sort((a, b) => a.localeCompare(b))
             .map((tag) => (
-              <span key={tag}>{tag}</span>
+              <span key={tag} className="tag">
+                {tag}
+              </span>
             ))}
         </TagContainer>
       </PostBody>

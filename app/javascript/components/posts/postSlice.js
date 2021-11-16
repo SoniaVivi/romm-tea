@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const emptyState = { posts: {}, filters: { tags: [], title: "" } };
+
 export const slice = createSlice({
   name: "post",
-  initialState: { posts: {} },
+  initialState: emptyState,
   reducers: {
     addPosts: {
       reducer(state, action) {
@@ -16,9 +18,18 @@ export const slice = createSlice({
         }
       },
     },
+    setFilters: {
+      reducer(state, action) {
+        state.filters.title = action.payload.title;
+        state.filters.tags = action.payload.tags;
+      },
+      prepare(title = "", tags = []) {
+        return { payload: { title, tags } };
+      },
+    },
   },
 });
 
-export const { addPosts } = slice.actions;
+export const { addPosts, setFilters } = slice.actions;
 
 export default slice.reducer;
