@@ -7,6 +7,7 @@ import starOutline from "svgs/starOutline.svg";
 import thermometer from "svgs/thermometer.svg";
 import clock from "svgs/clock.svg";
 import TrimmedLink from "./TrimmedLink";
+import { relativeTime } from "../../helpers/dateHelpers";
 
 const PostBody = styled.div`
   display: flex;
@@ -56,6 +57,11 @@ const TagContainer = styled.div`
   margin-left: -2px;
 `;
 
+const PosterDate = styled.span`
+  font-size: 12px;
+  color: #808080;
+`;
+
 const Post = (props) => {
   const data = useSelector((state) => state.post[props.id]);
 
@@ -79,7 +85,10 @@ const Post = (props) => {
           <h3>{data.name}</h3>
         </Field>
         <Field>
-          <span>{new Date(data.posted).toUTCString()}</span>
+          <PosterDate>
+            Posted by {data.poster}{" "}
+            {relativeTime(new Date(data.posted), { croppedFormat: true })} ago
+          </PosterDate>
         </Field>
         <Field>
           {Array(5)

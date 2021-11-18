@@ -16,7 +16,7 @@ class Post < ApplicationRecord
       rating: rating,
       price: price,
       notes: notes,
-      poster: User.find(poster_id).name,
+      poster: poster.name,
       link: link,
       temperature: temperature,
       name: name,
