@@ -8,6 +8,7 @@ import thermometer from "svgs/thermometer.svg";
 import clock from "svgs/clock.svg";
 import TrimmedLink from "./TrimmedLink";
 import { relativeTime } from "../../helpers/dateHelpers";
+import { Icon } from "../shared/Icon";
 
 const PostBody = styled.div`
   display: flex;
@@ -40,15 +41,6 @@ const Divider = styled.div`
     ${(props) => props.theme.text},
     ${({ theme }) => theme.postColor}
   );
-`;
-
-const Icon = styled.img`
-  display: inline-block;
-  width: 13px;
-  height: 13px;
-  margin-right: ${(props) => props.margin ?? 0};
-  mask-image: url(${(props) => props.link});
-  background-color: ${(props) => props.color};
 `;
 
 const TagContainer = styled.div`
@@ -102,10 +94,10 @@ const Post = (props) => {
             )}
         </Field>
         <Field>
-          <Icon link={thermometer} color="#000000" margin={"2px"} />
+          <Icon link={thermometer} color="#000000" marginRight={"2px"} />
           {data.temperature}
           <Divider size={"4px"} />
-          <Icon link={clock} color="#000000" margin={"3px"} />
+          <Icon link={clock} color="#000000" marginRight={"3px"} />
           {data.time}
         </Field>
         <Field>{price}</Field>

@@ -28,48 +28,6 @@ const Tag = styled.li`
     props.isSelected ? `border: 2px solid ${props.theme.hover}` : ""}
 `;
 
-const SearchBar = styled.input`
-  padding-left: 5px;
-  background-color: ${({ theme }) => theme.background};
-
-  &:focus {
-    border: unset;
-    outline: unset;
-  }
-`;
-
-const Modal = styled.div`
-  position: fixed;
-  z-index: 9999999999999999;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 100%;
-  min-width: 100%;
-  max-height: 100%;
-  min-height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
-const ModalWrapper = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  max-width: 480px;
-  min-height: 240px;
-  width: 100%;
-  height: fit-content;
-  padding: 5px 20px 0 20px;
-  background-color: ${({ theme }) => theme.postColor};
-
-  input {
-    height: 39px;
-    padding-left: 10px;
-    border: 1px solid ${({ theme }) => theme.borderColor};
-  }
-`;
-
 const SearchButtonContainer = styled.div`
   display: flex;
   align-items: center;
@@ -77,6 +35,10 @@ const SearchButtonContainer = styled.div`
   height: 39px;
   margin-bottom: 15px;
   background-color: ${({ theme }) => theme.background};
+
+  * {
+    font-size: 16px;
+  }
 `;
 
 const SearchButton = styled.button`
@@ -95,35 +57,10 @@ const SearchTagContainer = styled.div`
   flex-flow: row nowrap;
 `;
 
-const closeButtonSize = "32px";
-
-const CloseButton = styled.button`
-  position: relative;
-  max-width: ${closeButtonSize};
-  min-width: ${closeButtonSize};
-  max-height: ${closeButtonSize};
-  min-height: ${closeButtonSize};
-  margin: 0 -15px 5px auto;
-  border: 1px solid ${(props) => props.theme.postColor};
-  border-radius: 50%;
-
-  &:hover {
-    background-color: ${(props) => props.theme.background};
-  }
-
-  * {
-    position: absolute;
-    top: 45%;
-    left: 20%;
-    width: 60%;
-    height: 2px;
-    background-color: ${(props) => props.theme.text};
-    transform: rotate(45deg);
-  }
-
-  *:last-child {
-    bottom: 0;
-    transform: rotate(135deg);
+const ModalWrapper = styled.div`
+  input {
+    height: 39px;
+    border: 1px solid ${({ theme }) => theme.borderColor};
   }
 `;
 
@@ -160,7 +97,7 @@ const Search = () => {
 
   return (
     <Container>
-      <SearchBar {...inputProps} onClick={() => setShowModal(true)}></SearchBar>
+      <input {...inputProps} onClick={() => setShowModal(true)}></input>
       <TagContainer onClick={() => setShowModal(true)}>
         {tags.map((tagName) => (
           <Tag key={tagName} className="tag">
@@ -169,12 +106,12 @@ const Search = () => {
         ))}
       </TagContainer>
       {showModal ? (
-        <Modal>
-          <ModalWrapper>
-            <CloseButton onClick={closeModal}>
+        <div className="modal">
+          <ModalWrapper className="modal-wrapper">
+            <div onClick={closeModal} className="exit">
               <div></div>
               <div></div>
-            </CloseButton>
+            </div>
             <SearchButtonContainer>
               <SearchButton
                 active={activeTab == "title"}
@@ -190,10 +127,10 @@ const Search = () => {
               </SearchButton>
             </SearchButtonContainer>
             {activeTab == "title" ? (
-              <SearchBar
+              <input
                 {...inputProps}
                 onKeyDown={(e) => (e.code == "Enter" ? closeModal() : "")}
-              ></SearchBar>
+              ></input>
             ) : (
               <SearchTagContainer>
                 {postTags.map((tagName) => (
@@ -216,7 +153,7 @@ const Search = () => {
               </SearchTagContainer>
             )}
           </ModalWrapper>
-        </Modal>
+        </div>
       ) : null}
     </Container>
   );

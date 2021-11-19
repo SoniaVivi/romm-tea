@@ -5,6 +5,7 @@ import { addPosts } from "../posts/postSlice";
 import Post from "./Post";
 import PostHeader from "./PostHeader";
 import Search from "./Search";
+import { setUserName } from "../users/userSlice";
 
 const PostIndex = (props) => {
   const filters = useSelector((state) => state.post.filters);
@@ -44,7 +45,10 @@ const PostIndex = (props) => {
     }
   }, [props.posts, sort, filters.tags, filters.title]);
   const dispatch = useDispatch();
-  useEffect(() => dispatch(addPosts(props.posts)), [dispatch, props.posts]);
+  useEffect(() => {
+    dispatch(addPosts(props.posts));
+    dispatch(setUserName(props.userName));
+  }, [dispatch, props.posts, props.userName]);
 
   return (
     <React.Fragment>
@@ -62,4 +66,5 @@ export default PostIndex;
 
 PostIndex.propTypes = {
   posts: PropTypes.array.isRequired,
+  userName: PropTypes.string.isRequired,
 };

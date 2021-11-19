@@ -20,7 +20,7 @@ const Index = (props) => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <PostIndex posts={props.posts} />
+        <PostIndex {...props} />
       </ThemeProvider>
     </Provider>
   );

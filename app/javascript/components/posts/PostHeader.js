@@ -1,44 +1,46 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import HeaderUserForm from "../users/HeaderUserForm";
+import { NavOption } from "../shared/NavOption";
 
 const childPadding = "10px";
 
 const HeaderContainer = styled.ul`
+  position: sticky;
+  top: 0;
+  z-index: 2;
   display: flex;
   width: calc(100% - ${({ theme }) => theme.postSideMargin * 4 - 1}px);
   height: 48px;
   margin-left: 5px;
   ${({ theme }) => theme.postMarginBottom}
   border: 1px solid #cccccc;
+  font-size: 16px;
 
   * {
-    font-size: 16px;
     font-weight: 600;
   }
-`;
-
-const SortOption = styled.li`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  border-radius: 0;
 `;
 
 const SortButton = styled.button`
   height: 100%;
   padding: 0 ${childPadding};
+  font-size: 16px;
 
   &:hover {
     background-color: ${({ theme }) => theme.hover};
   }
 `;
 
-const PriceMenu = styled(SortOption)`
+const PriceMenu = styled(NavOption)`
   position: relative;
   flex-flow: column nowrap;
   min-width: 80px;
+
+  * {
+    font-size: 16px;
+  }
 
   *:not(.visible) {
     display: none;
@@ -99,30 +101,28 @@ const PostHeader = (props) => {
   const isSelected = (match) =>
     match == props.currentSort ? "selected" : null;
 
+  const setSort = (sort) => () => {
+    props.setSort(sort);
+    window.scrollTo(0, 0);
+  };
   return (
     <HeaderContainer className="background-post">
-      <SortOption>
-        <SortButton
-          onClick={() => props.setSort("new")}
-          className={isSelected("new")}
-        >
+      <NavOption>
+        <SortButton onClick={setSort("new")} className={isSelected("new")}>
           New
         </SortButton>
-      </SortOption>
-      <SortOption>
-        <SortButton
-          onClick={() => props.setSort("top")}
-          className={isSelected("top")}
-        >
+      </NavOption>
+      <NavOption>
+        <SortButton onClick={setSort("top")} className={isSelected("top")}>
           Top
         </SortButton>
-      </SortOption>
+      </NavOption>
       <PriceMenu>
         <span className="visible">Price</span>
         <ul className="background-post">
           <li>
             <button
-              onClick={() => props.setSort("high-low")}
+              onClick={setSort("high-low")}
               className={isSelected("high-low")}
             >
               <span>High</span>
@@ -132,7 +132,7 @@ const PostHeader = (props) => {
           </li>
           <li>
             <button
-              onClick={() => props.setSort("low-high")}
+              onClick={setSort("low-high")}
               className={isSelected("low-high")}
             >
               <span>Low</span>
@@ -143,6 +143,7 @@ const PostHeader = (props) => {
         </ul>
       </PriceMenu>
       {props.children}
+      <HeaderUserForm />
     </HeaderContainer>
   );
 };
