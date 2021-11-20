@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { TextForm } from "./formComponents/TextForm";
-import { PageLink } from "./formComponents/PageLink";
-import { FormActionButton } from "./formComponents/FormActionButton";
+import { TextForm } from "../shared/formComponents/TextForm";
+import { PageLink } from "../shared/formComponents/PageLink";
+import { FormActionButton } from "../shared/formComponents/FormActionButton";
 import sendAjaxRequest from "../shared/sendAjaxRequest";
 import { setUserName } from "./userSlice";
 

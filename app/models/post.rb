@@ -3,7 +3,7 @@ class Post < ApplicationRecord
   validates :temperature, presence: true
   validates :price, presence: true
   validates :notes, length: { in: 0..512 }
-  validates :name, length: { in: 0..128 }
+  validates :name, length: { in: 1..128 }
 
   belongs_to :poster, class_name: 'User'
   has_many :post_tags
@@ -20,7 +20,7 @@ class Post < ApplicationRecord
       link: link,
       temperature: temperature,
       name: name,
-      time: '90 30 90',
+      time: time,
       tags: tags.map { |tag| tag.name },
     }
   end

@@ -9,7 +9,6 @@ const Container = styled.li`
   align-items: center;
   height: 36px;
   margin-left: auto;
-  margin-right: 32px;
   border: 1px solid ${({ theme }) => theme.postColor};
   background-color: ${({ theme }) => theme.background};
 `;

@@ -153,5 +153,5 @@ export default PostHeader;
 PostHeader.propTypes = {
   setSort: PropTypes.func.isRequired,
   currentSort: PropTypes.string.isRequired,
-  children: PropTypes.object,
+  children: PropTypes.array,
 };

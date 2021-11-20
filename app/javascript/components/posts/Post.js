@@ -2,13 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import starFill from "svgs/starFill.svg";
-import starOutline from "svgs/starOutline.svg";
 import thermometer from "svgs/thermometer.svg";
 import clock from "svgs/clock.svg";
 import TrimmedLink from "./TrimmedLink";
 import { relativeTime } from "../../helpers/dateHelpers";
 import { Icon } from "../shared/Icon";
+import Rating from "../shared/Rating";
 
 const PostBody = styled.div`
   display: flex;
@@ -83,15 +82,7 @@ const Post = (props) => {
           </PosterDate>
         </Field>
         <Field>
-          {Array(5)
-            .fill()
-            .map((_, i) =>
-              i < data.rating ? (
-                <Icon key={i} link={starFill} color="#25c5df" />
-              ) : (
-                <Icon key={i} link={starOutline} color="#25c5df" />
-              )
-            )}
+          <Rating currentRating={data.rating} />
         </Field>
         <Field>
           <Icon link={thermometer} color="#000000" marginRight={"2px"} />
