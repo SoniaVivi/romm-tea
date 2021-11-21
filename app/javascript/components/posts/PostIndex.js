@@ -34,11 +34,7 @@ const PostIndex = (props) => {
     if (sort) {
       switch (sort) {
         case "new":
-          return sortPosts((a, b) =>
-            new Date(a.posted) - new Date(b.posted)
-              ? new Date(a.posted) - new Date(b.posted)
-              : a.id - b.id
-          );
+          return sortPosts((a, b) => b.id - a.id);
         case "top":
           return sortPosts((a, b) => b.rating - a.rating);
         case "high-low":
