@@ -10,7 +10,7 @@ const HeaderContainer = styled(NavOption)`
   align-self: center;
   min-width: fit-content;
   height: 35px;
-  margin: 0 auto 0 16px;
+  margin: 0 10px 0 auto;
   font-size: 14px;
   border: 1px solid ${({ theme }) => theme.postColor};
 

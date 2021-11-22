@@ -43,6 +43,7 @@ const Container = styled.div`
 const Menu = styled(DropdownContainer)`
   right: 0;
   align-items: center;
+  min-width: fit-content;
   width: 90px;
   min-height: 20px;
 `;
@@ -89,6 +90,7 @@ const OptionsContainer = (props) => {
               Edit Post
             </MenuButton>
           ) : null}
+          <MenuButton className="hover">Placeholder</MenuButton>
         </Menu>
       ) : null}
       {mode == "edit" ? (

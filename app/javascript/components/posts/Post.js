@@ -20,6 +20,14 @@ const PostBody = styled.div`
   ${({ theme }) => theme.postMarginBottom}
   padding: 8px ${({ theme }) => theme.postSidePadding}px;
   border: 1px solid ${({ theme }) => theme.borderColor};
+
+  @media (max-width: 720px) {
+    width: calc(50% - 14px);
+  }
+
+  @media (max-width: 540px) {
+    width: calc(100% - 19px);
+  }
 `;
 
 const Field = styled.div`
@@ -27,6 +35,10 @@ const Field = styled.div`
   align-items: center;
   width: calc(100% - 20px);
   margin-bottom: 5px;
+
+  h3 {
+    word-break: break-word;
+  }
 `;
 
 const Divider = styled.div`
