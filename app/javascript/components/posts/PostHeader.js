@@ -11,7 +11,8 @@ const HeaderContainer = styled.ul`
   top: 0;
   z-index: 2;
   display: flex;
-  width: calc(100% - ${({ theme }) => theme.postSideMargin * 4 - 1}px);
+  max-width: calc(100% - ${({ theme }) => theme.postSideMargin * 4 - 1}px);
+  width: 960px;
   height: 48px;
   margin-left: 5px;
   ${({ theme }) => theme.postMarginBottom}

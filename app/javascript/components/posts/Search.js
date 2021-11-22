@@ -7,10 +7,13 @@ const Container = styled.li`
   align-self: center;
   display: flex;
   align-items: center;
+  min-width: 30px;
+  max-width: 500px;
   height: 36px;
   margin-left: auto;
   border: 1px solid ${({ theme }) => theme.postColor};
   background-color: ${({ theme }) => theme.background};
+  overflow: hidden;
 `;
 
 const TagContainer = styled.ul`
@@ -23,8 +26,9 @@ const Tag = styled.li`
   padding-bottom: 0;
   border-color: ${({ theme }) => theme.background};
   ${(props) => (props.isSelected ? "filter: grayscale(40%);" : "")}
-  ${(props) =>
-    props.isSelected ? `border: 2px solid ${props.theme.hover}` : ""}
+  border: 2px solid  ${(props) =>
+    props.isSelected ? props.theme.hover : "transparent"};
+  user-select: none;
 `;
 
 const SearchButtonContainer = styled.div`
@@ -53,7 +57,8 @@ const SearchButton = styled.button`
 
 const SearchTagContainer = styled.div`
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
+  max-width: 100%;
 `;
 
 const ModalWrapper = styled.div`
@@ -65,7 +70,7 @@ const ModalWrapper = styled.div`
 
 const Search = () => {
   const postTags = useSelector((state) => {
-    const posts = Object.values(state.post);
+    const posts = Object.values(state.post.posts);
     if (!posts.length) return [];
 
     return [

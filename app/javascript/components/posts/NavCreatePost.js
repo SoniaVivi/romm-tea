@@ -8,6 +8,7 @@ import { addPosts } from "./postSlice";
 
 const HeaderContainer = styled(NavOption)`
   align-self: center;
+  min-width: fit-content;
   height: 35px;
   margin: 0 auto 0 16px;
   font-size: 14px;
@@ -38,7 +39,7 @@ const NavCreatePost = () => {
 
   return (
     <HeaderContainer>
-      <button onClick={toggleModal}>Create a new post</button>
+      <button onClick={toggleModal}>New post</button>
       {showModal ? (
         <PostForm toggle={toggleModal} submitFunc={submitPost} />
       ) : null}
