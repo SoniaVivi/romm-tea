@@ -19,8 +19,10 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: ${(props) =>
     props.childType == "number" ? "row" : "column"};
+  justify-content: center;
 
   > * {
     margin-right: 10px;

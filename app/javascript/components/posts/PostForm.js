@@ -69,7 +69,11 @@ const PostForm = (props) => {
           <div></div>
           <div></div>
         </div>
-        <TextForm placeholder="Name" onChange={onChangeFunc("name")} />
+        <TextForm
+          placeholder="Name"
+          onChange={onChangeFunc("name")}
+          value={postData.name}
+        />
         <RatingWrapper>
           <Rating
             currentRating={postData.rating}
@@ -110,8 +114,13 @@ const PostForm = (props) => {
         <textarea
           placeholder="Notes"
           onChange={onChangeFunc("notes")}
+          value={postData.notes}
         ></textarea>
-        <TextForm placeholder="Link" onChange={onChangeFunc("link")} />
+        <TextForm
+          placeholder="Link"
+          onChange={onChangeFunc("link")}
+          value={postData.link}
+        />
         <ItemForm
           items={postData.tags}
           modifyItems={(mutator) =>

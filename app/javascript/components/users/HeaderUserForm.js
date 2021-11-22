@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import person from "svgs/person.svg";
+import DropdownButton from "../shared/dropdown/DropdownButton";
+import DropdownContainer from "../shared/dropdown/DropdownContainer";
 import { Icon } from "../shared/Icon";
 import { NavOption } from "../shared/NavOption";
 import sendAjaxRequest from "../shared/sendAjaxRequest";
@@ -49,27 +51,6 @@ const LoggedInUserContainer = styled(PersonIconContainer)`
   }
 `;
 
-const Dropdown = styled.div`
-  position: absolute;
-  z-index: 3;
-  display: none;
-  top: 100%;
-  width: 100%;
-  border: 1px solid ${({ theme }) => theme.borderColor};
-  border-top: unset;
-  border-top-left-radius: unset;
-  border-top-right-radius: unset;
-  background-color: ${({ theme }) => theme.postColor};
-`;
-
-const DropdownButton = styled.button`
-  display: flex;
-  width: 100%;
-  padding-left: 36px;
-  padding-bottom: 10px;
-  font-size: 16px;
-`;
-
 const HeaderUserForm = () => {
   const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState("login");
@@ -84,7 +65,7 @@ const HeaderUserForm = () => {
       <LoggedInUserContainer onClick={toggleModal}>
         <PersonIcon link={person} color="#000000" />
         <span>{userName}</span>
-        <Dropdown>
+        <DropdownContainer>
           <DropdownButton
             className="hover"
             onClick={() =>
@@ -95,7 +76,7 @@ const HeaderUserForm = () => {
           >
             Log out
           </DropdownButton>
-        </Dropdown>
+        </DropdownContainer>
       </LoggedInUserContainer>
     );
   }

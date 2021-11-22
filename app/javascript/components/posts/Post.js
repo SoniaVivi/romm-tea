@@ -8,8 +8,10 @@ import TrimmedLink from "./TrimmedLink";
 import { relativeTime } from "../../helpers/dateHelpers";
 import { Icon } from "../shared/Icon";
 import Rating from "../shared/Rating";
+import OptionsContainer from "./OptionsContainer";
 
 const PostBody = styled.div`
+  position: relative;
   display: flex;
   flex-flow: column nowrap;
   max-width: 100%;
@@ -23,7 +25,7 @@ const PostBody = styled.div`
 const Field = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: calc(100% - 20px);
   margin-bottom: 5px;
 `;
 
@@ -54,7 +56,7 @@ const PosterDate = styled.span`
 `;
 
 const Post = (props) => {
-  const data = useSelector((state) => state.post[props.id]);
+  const data = useSelector((state) => state.post.posts[props.id]);
 
   if (data) {
     const price =
@@ -72,6 +74,7 @@ const Post = (props) => {
 
     return (
       <PostBody className="background-post">
+        <OptionsContainer postId={data.id} />
         <Field>
           <h3>{data.name}</h3>
         </Field>
@@ -89,7 +92,7 @@ const Post = (props) => {
           {data.temperature}
           <Divider size={"4px"} />
           <Icon link={clock} color="#000000" marginRight={"3px"} />
-          {data.time}
+          {data.time ? data?.time.join(" ") : null}
         </Field>
         <Field>{price}</Field>
         <p>{data.notes}</p>

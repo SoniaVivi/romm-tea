@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const inputSize = 35;
+export const inputSize = 50;
 
 export const arrowSize = 25;
 

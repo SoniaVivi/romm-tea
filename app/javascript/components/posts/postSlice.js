@@ -8,7 +8,14 @@ export const slice = createSlice({
   reducers: {
     addPosts: {
       reducer(state, action) {
-        action.payload.posts.forEach((post) => (state[post.id] = post));
+        action.payload.posts.forEach(
+          (post) =>
+            (state.posts[post.id] = {
+              ...post,
+              temperature: Number(post.temperature),
+              time: post?.time?.map((time) => Number(time)),
+            })
+        );
       },
       prepare(posts) {
         if (posts.constructor === Array) {

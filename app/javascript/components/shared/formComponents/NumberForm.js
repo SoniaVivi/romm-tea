@@ -21,16 +21,28 @@ const ArrowContainer = styled.div`
 `;
 
 const NumberForm = (props) => {
+  const formatNumber = (value) => {
+    if (!value.match(/\./)) {
+      return Number(value);
+    } else if (value[value.length - 1] == ".") {
+      return `${value}00`;
+    } else {
+      return value;
+    }
+  };
   const setValue = (val) =>
-    /^\d+$/.test(val) || val == ""
-      ? props.onChange((prev) => ({ ...prev, [props.fieldName]: Number(val) }))
+    /^(\d|\.)+$/.test(val) || val == ""
+      ? props.onChange((prev) => ({
+          ...prev,
+          [props.fieldName]: formatNumber(val),
+        }))
       : null;
   const valueStepFunc =
     (change = 1) =>
     () =>
       props.onChange((prev) => ({
         ...prev,
-        [props.fieldName]: prev[props.fieldName] + change,
+        [props.fieldName]: parseFloat(prev[props.fieldName]) + change,
       }));
 
   return (

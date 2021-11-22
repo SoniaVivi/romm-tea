@@ -10,7 +10,7 @@ import NavCreatePost from "./NavCreatePost";
 
 const PostIndex = (props) => {
   const filters = useSelector((state) => state.post.filters);
-  const posts = useSelector((state) => state.post);
+  const posts = useSelector((state) => state.post.posts);
   const [sort, setSort] = useState("new");
   const postIds = useMemo(() => {
     const postData = Object.values(posts).filter((post) => post?.id);
