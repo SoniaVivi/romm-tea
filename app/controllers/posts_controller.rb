@@ -11,8 +11,8 @@ class PostsController < ApplicationController
     post = Post.new(JSON.parse(post_params[:formData]))
     post.poster_id = current_user.id
     if post.save
-      from_json_save_tags(post_params[:tags], post.id)
-      render json: { success: true, post: post.get_data }
+      tags = from_json_save_tags(post, post_params[:tags])
+      render json: { success: true, post: { **post.get_data, tags: tags } }
     else
       render json: { success: false }
     end
@@ -27,8 +27,8 @@ class PostsController < ApplicationController
            .parse(post_params[:formData])
            .keep_if { |key| Post.has_attribute? key },
        )
-      from_json_save_tags(post_params[:tags], post.id)
-      render json: { success: true, post: post.get_data }
+      tags = from_json_save_tags(post, post_params[:tags])
+      render json: { success: true, post: { **post.get_data, tags: tags } }
     else
       render json: { success: false }
     end
@@ -39,14 +39,28 @@ class PostsController < ApplicationController
   def create_and_edit_params
     params.permit(:formData, :tags, :id)
   end
-  def from_json_save_tags(tags, post_id)
-    JSON
-      .parse(tags)
-      .each do |tag_name|
-        PostTag.create(
-          post_id: post_id,
-          tag_id: Tag.find_or_create_by(name: tag_name).id,
-        )
+  def from_json_save_tags(post, tags)
+    submitted_tags = JSON.parse(tags).map { |tag| tag.strip }
+    new_tags = (submitted_tags - post.tags.to_a.map { |tag| tag.name })
+    total_tags = filter_tags(post, submitted_tags)
+    new_tags.each do |tag_name|
+      PostTag.find_or_create_by(
+        post_id: post.id,
+        tag_id: Tag.find_or_create_by(name: tag_name.strip).id,
+      )
+      total_tags << tag_name.strip
+    end
+    total_tags.uniq
+  end
+  def filter_tags(post, keep_tags)
+    filtered_array = []
+    post.tags.each do |tag|
+      if !keep_tags.any? tag.name
+        PostTag.where(post_id: post.id, tag_id: tag.id).destroy_all
+      else
+        filtered_array << tag.name
       end
+    end
+    filtered_array
   end
 end

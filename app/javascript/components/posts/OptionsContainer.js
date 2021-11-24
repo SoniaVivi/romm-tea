@@ -7,6 +7,7 @@ import DropdownContainer from "../shared/dropdown/DropdownContainer";
 import PostForm from "./PostForm";
 import sendAjaxRequest from "../shared/sendAjaxRequest";
 import { addPosts } from "./postSlice";
+import onOutsideClick from "../shared/onOutsideClick";
 
 const ContainerSize = 25;
 
@@ -75,9 +76,14 @@ const OptionsContainer = (props) => {
     <Container>
       <button
         className="hover"
-        onClick={() =>
-          setMode((prevMode) => (prevMode != "menu" ? "menu" : ""))
-        }
+        onClick={(e) => {
+          setMode((prevMode) => (prevMode != "menu" ? "menu" : ""));
+          onOutsideClick(
+            () => setMode((prevMode) => (prevMode == "menu" ? "" : prevMode)),
+            e,
+            "parent"
+          );
+        }}
       >
         <div></div>
         <div></div>
@@ -89,8 +95,9 @@ const OptionsContainer = (props) => {
             <MenuButton className="hover" onClick={() => setMode("edit")}>
               Edit Post
             </MenuButton>
-          ) : null}
-          <MenuButton className="hover">Placeholder</MenuButton>
+          ) : (
+            <MenuButton className="hover">Placeholder</MenuButton>
+          )}
         </Menu>
       ) : null}
       {mode == "edit" ? (

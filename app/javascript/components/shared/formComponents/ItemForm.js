@@ -34,10 +34,14 @@ const Wrapper = styled.div`
 `;
 
 const RemoveButton = styled(NumberFormWrapper)`
+  align-self: center;
   justify-content: center;
   align-items: center;
-  width: 61px;
+  min-width: 61;
+  width: fit-content;
+  padding: 0 10px;
   font-size: 16px;
+  word-break: break-word;
 `;
 
 const BottomButtonContainer = styled.div`
