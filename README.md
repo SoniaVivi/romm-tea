@@ -1,24 +1,19 @@
-# README
+![rommTea](https://user-images.githubusercontent.com/55420399/143302094-544f2a9f-dafd-46f6-bc51-9629b1becc25.png)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Romm Tea
 
-Things you may want to cover:
+A site to list teas infusing time, rating, name, link, and more.
 
-* Ruby version
+**Features**
 
-* System dependencies
+-Keep track of a tea's name, infusing time and temperature, price, rating, and store link.
 
-* Configuration
+-Add tags to teas.
 
-* Database creation
+-Sort by recently added, price, and rating.
 
-* Database initialization
+-Search by title and tags (or a combination of both).
 
-* How to run the test suite
+**Running a local copy**
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Clone the repository then run `bundle install` and `yarn` to install dependencies. Then run `rails server` to run a local copy
