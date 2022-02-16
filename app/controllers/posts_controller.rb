@@ -44,6 +44,7 @@ class PostsController < ApplicationController
     new_tags = (submitted_tags - post.tags.to_a.map { |tag| tag.name })
     total_tags = filter_tags(post, submitted_tags)
     new_tags.each do |tag_name|
+      next if !Tag.new(name: tag_name).valid?
       PostTag.find_or_create_by(
         post_id: post.id,
         tag_id: Tag.find_or_create_by(name: tag_name.strip).id,
