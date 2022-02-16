@@ -1,22 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { NavOption } from "../shared/NavOption";
-import sendAjaxRequest from "../shared/sendAjaxRequest";
-import PostForm from "./PostForm";
-import { addPosts } from "./postSlice";
+import { NavOption } from "../../shared/NavOption";
+import sendAjaxRequest from "../../shared/sendAjaxRequest";
+import PostForm from "../PostForm";
+import { addPosts } from "../postSlice";
 
 const HeaderContainer = styled(NavOption)`
   align-self: center;
   min-width: fit-content;
   height: 35px;
-  margin: 0 10px 0 auto;
+  margin: 0 10px 0 15px;
   font-size: 14px;
-  border: 1px solid ${({ theme }) => theme.postColor};
-
-  &:hover {
-    border: 1px solid ${({ theme }) => theme.borderColor};
-  }
 
   > button {
     width: 100%;
@@ -38,7 +33,7 @@ const NavCreatePost = () => {
     });
 
   return (
-    <HeaderContainer>
+    <HeaderContainer className="hover-outline">
       <button onClick={toggleModal}>New post</button>
       {showModal ? (
         <PostForm toggle={toggleModal} submitFunc={submitPost} />

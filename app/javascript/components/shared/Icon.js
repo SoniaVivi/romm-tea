@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Icon = styled.img`
+  position: relative;
   display: inline-block;
   width: ${(props) => props.size ?? 13}px;
   height: ${(props) => props.size ?? 13}px;

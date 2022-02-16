@@ -100,10 +100,23 @@ const Post = (props) => {
           <Rating currentRating={data.rating} />
         </Field>
         <Field>
-          <Icon link={thermometer} color="#000000" marginRight={"2px"} />
+          <div className="hint-container">
+            <Icon link={thermometer} marginRight={"2px"} />
+            <span className="hint">Temperature</span>
+          </div>
           {data.temperature}
           <Divider size={"4px"} />
-          <Icon link={clock} color="#000000" marginRight={"3px"} />
+          <div className="hint-container">
+            <Icon link={clock} marginRight={"3px"} />
+            <span
+              className="hint"
+              css={`
+                width: 180px;
+              `}
+            >
+              Infusion time for each consequent cup in seconds
+            </span>
+          </div>
           {data.time ? data?.time.join(" ") : null}
         </Field>
         <Field>{price}</Field>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { setFilters } from "./postSlice";
+import { setFilters } from "../postSlice";
 
 const Container = styled.li`
   align-self: center;
@@ -11,6 +11,7 @@ const Container = styled.li`
   max-width: 500px;
   height: 36px;
   margin-left: auto;
+  margin-right: 15px;
   border: 1px solid ${({ theme }) => theme.postColor};
   background-color: ${({ theme }) => theme.background};
   overflow: hidden;

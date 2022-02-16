@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { addPosts } from "../posts/postSlice";
 import Post from "./Post";
-import PostHeader from "./PostHeader";
-import Search from "./Search";
+import PostHeader from "./navBar/PostHeader";
+import Search from "./navBar/Search";
 import { setUserName } from "../users/userSlice";
-import NavCreatePost from "./NavCreatePost";
+import NavCreatePost from "./navBar/NavCreatePost";
 
 const PostIndex = (props) => {
   const filters = useSelector((state) => state.post.filters);

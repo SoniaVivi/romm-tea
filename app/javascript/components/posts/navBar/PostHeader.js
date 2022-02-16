@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import HeaderUserForm from "../users/HeaderUserForm";
-import { NavOption } from "../shared/NavOption";
+import HeaderUserForm from "../../users/HeaderUserForm";
+import { NavOption } from "../../shared/NavOption";
+import ThemeToggle from "./ThemeToggle";
 
 const childPadding = "10px";
 
@@ -16,7 +17,7 @@ const HeaderContainer = styled.ul`
   height: 48px;
   margin-left: 5px;
   ${({ theme }) => theme.postMarginBottom}
-  border: 1px solid #cccccc;
+  border: 1px solid ${(props) => props.theme.navBorder};
   font-size: 16px;
 
   * {
@@ -145,6 +146,7 @@ const PostHeader = (props) => {
       </PriceMenu>
       {props.children}
       <HeaderUserForm />
+      <ThemeToggle />
     </HeaderContainer>
   );
 };

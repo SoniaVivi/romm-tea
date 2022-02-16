@@ -7,7 +7,7 @@ const DropdownContainer = styled.div`
   display: none;
   flex-flow: column nowrap;
   width: calc(100% + 2px);
-  border: 1px solid ${({ theme }) => theme.borderColor};
+  border: 1px solid ${({ theme }) => theme.navBorder};
   ${(props) =>
     props.topBorder
       ? ""

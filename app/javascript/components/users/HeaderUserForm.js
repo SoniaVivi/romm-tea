@@ -17,12 +17,12 @@ const PersonIconContainer = styled(NavOption)`
   align-self: center;
   min-width: 110px;
   height: ${personIconSize + 10}px;
-  margin-right: 20px;
+  margin-right: 10px;
   padding: 0 10px;
   border: 1px solid ${({ theme }) => theme.postColor};
 
   &:hover {
-    border-color: ${({ theme }) => theme.borderColor};
+    border-color: ${({ theme }) => theme.navBorder};
   }
 `;
 
@@ -63,7 +63,7 @@ const HeaderUserForm = () => {
   if (userName.length) {
     return (
       <LoggedInUserContainer onClick={toggleModal}>
-        <PersonIcon link={person} color="#000000" />
+        <PersonIcon link={person} />
         <span>{userName}</span>
         <DropdownContainer>
           <DropdownButton
@@ -84,7 +84,7 @@ const HeaderUserForm = () => {
   return (
     <React.Fragment>
       <PersonIconContainer onClick={toggleModal}>
-        <PersonIcon link={person} color="#000000" />
+        <PersonIcon link={person} />
       </PersonIconContainer>
       {showModal ? (
         <div className="modal">
