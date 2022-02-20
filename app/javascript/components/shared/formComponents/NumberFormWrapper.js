@@ -9,6 +9,7 @@ export const NumberFormWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: ${(props) => props.size ?? inputSize + arrowSize + 1}px;
+  max-height: 50px;
   height: 50px;
   background-color: ${(props) => props.background ?? props.theme.background};
 

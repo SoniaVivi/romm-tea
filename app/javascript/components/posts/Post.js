@@ -7,6 +7,7 @@ import clock from "svgs/clock.svg";
 import TrimmedLink from "./TrimmedLink";
 import { relativeTime } from "../../helpers/dateHelpers";
 import { Icon } from "../shared/Icon";
+import waterDroplet from "svgs/droplet.svg";
 import Rating from "../shared/Rating";
 import OptionsContainer from "./OptionsContainer";
 
@@ -67,6 +68,20 @@ const PosterDate = styled.span`
   color: #808080;
 `;
 
+const LeafQuantityWrapper = styled(Field)`
+  align-items: flex-start;
+
+  .hint {
+    top: 30px;
+    left: 15px;
+    height: fit-content;
+  }
+`;
+
+const IconWrapper = styled.div`
+  align-items: center;
+`;
+
 const Post = (props) => {
   const data = useSelector((state) => state.post.posts[props.id]);
 
@@ -100,14 +115,16 @@ const Post = (props) => {
           <Rating currentRating={data.rating} />
         </Field>
         <Field>
-          <div className="hint-container">
+          <IconWrapper className="hint-container">
             <Icon link={thermometer} marginRight={"2px"} />
+            {data.temperature}
+            {data.tempUnit == "fahrenheit" ? "℉" : "℃"}
             <span className="hint">Temperature</span>
-          </div>
-          {data.temperature}
+          </IconWrapper>
           <Divider size={"4px"} />
-          <div className="hint-container">
+          <IconWrapper className="hint-container">
             <Icon link={clock} marginRight={"3px"} />
+            {data.time ? data?.time.join(" ") : null}
             <span
               className="hint"
               css={`
@@ -116,10 +133,25 @@ const Post = (props) => {
             >
               Infusion time for each consequent cup in seconds
             </span>
-          </div>
-          {data.time ? data?.time.join(" ") : null}
+          </IconWrapper>
         </Field>
         <Field>{price}</Field>
+        {data.leafQuantity ? (
+          <LeafQuantityWrapper className="hint-container">
+            <span css={"width: 40px;"}>茶葉</span>
+            <span>{data.leafQuantity}</span>
+            <span className="hint">Leaf Quantity</span>
+          </LeafQuantityWrapper>
+        ) : null}
+        {data.waterQuantity ? (
+          <Field className="hint-container">
+            <Icon link={waterDroplet} marginRight={"3px"} />
+            <span>{data.waterQuantity}</span>
+            <span className="hint" css={"left: 15%;"}>
+              Water Quantity
+            </span>
+          </Field>
+        ) : null}
         <p>{data.notes}</p>
         <Field>
           <TrimmedLink href={data.link} />

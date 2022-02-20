@@ -4,6 +4,10 @@ class Post < ApplicationRecord
   validates :price, presence: true
   validates :notes, length: { in: 0..512 }
   validates :name, length: { in: 1..128 }
+  validates :temp_unit, presence: true
+  validates :temp_unit, inclusion: { in: %w[celsius fahrenheit] }
+  validates :water_quantity, length: { in: 0..12 }
+  validates :leaf_quantity, length: { in: 0..32 }
 
   belongs_to :poster, class_name: 'User'
   has_many :post_tags
@@ -19,9 +23,12 @@ class Post < ApplicationRecord
       poster: poster.name,
       link: link,
       temperature: temperature,
+      tempUnit: temp_unit,
       name: name,
       time: time,
       tags: tags.map { |tag| tag.name },
+      waterQuantity: water_quantity,
+      leafQuantity: leaf_quantity,
     }
   end
 end

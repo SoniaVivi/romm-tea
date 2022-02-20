@@ -5,6 +5,7 @@ import { TextForm } from "../shared/formComponents/TextForm";
 import NumberForm from "../shared/formComponents/NumberForm";
 import Rating from "../shared/Rating";
 import ItemForm from "../shared/formComponents/ItemForm";
+import ItemSelection from "../shared/formComponents/ItemSelection";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -18,13 +19,10 @@ const Wrapper = styled.div`
 
 const PriceTemperatureWrapper = styled.div`
   display: flex;
-
-  > div {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    margin-right: 25px;
-  }
+  flex-flow: column nowrap;
+  align-items: center;
+  max-height: 71px;
+  margin-right: 25px;
 `;
 
 const RatingWrapper = styled.div`
@@ -52,8 +50,20 @@ const PostForm = (props) => {
     notes: "",
     link: "",
     tags: [""],
+    temp_unit: "",
+    water_quantity: "",
+    leaf_quantity: "",
   };
-  const [postData, setPostData] = useState(props.initialState ?? emptyState);
+  const [postData, setPostData] = useState(
+    props.initialState
+      ? {
+          ...props.initialState,
+          temp_unit: props.initialState.tempUnit,
+          water_quantity: props.initialState.waterQuantity ?? "",
+          leaf_quantity: props.initialState.leafQuantity ?? "",
+        }
+      : emptyState
+  );
   const onChangeFunc =
     (fieldName, mutator = (data) => data) =>
     (e) =>
@@ -83,24 +93,33 @@ const PostForm = (props) => {
             starSize={30}
           />
         </RatingWrapper>
-        <PriceTemperatureWrapper>
-          <div>
-            <h3>Temperature</h3>
+        <div className="flex">
+          <PriceTemperatureWrapper className="flex column wrap">
+            <h3 css={"max-width: 104px; max-height: 21px;"}>Temperature</h3>
             <NumberForm
               value={postData.temperature}
               onChange={setPostData}
               fieldName={"temperature"}
             />
-          </div>
-          <div>
+            <div css={"height: 100%;"}></div>
+            <ItemSelection
+              value={postData.temp_unit}
+              items={["celsius", "fahrenheit"]}
+              onClick={(optionText) =>
+                setPostData((prev) => ({ ...prev, temp_unit: optionText }))
+              }
+              displayFunc={(text) => (text == "celsius" ? "℃" : "℉")}
+            />
+          </PriceTemperatureWrapper>
+          <PriceTemperatureWrapper>
             <h3>Price</h3>
             <NumberForm
               value={postData.price}
               onChange={setPostData}
               fieldName={"price"}
             />
-          </div>
-        </PriceTemperatureWrapper>
+          </PriceTemperatureWrapper>
+        </div>
         <ItemForm
           items={postData.time}
           modifyItems={(mutator) =>
@@ -116,6 +135,16 @@ const PostForm = (props) => {
           onChange={onChangeFunc("notes")}
           value={postData.notes}
         ></textarea>
+        <TextForm
+          placeholder="Leaf Quantity"
+          onChange={onChangeFunc("leaf_quantity")}
+          value={postData.leaf_quantity}
+        />
+        <TextForm
+          placeholder="Water Quantity"
+          onChange={onChangeFunc("water_quantity")}
+          value={postData.water_quantity}
+        />
         <TextForm
           placeholder="Link"
           onChange={onChangeFunc("link")}

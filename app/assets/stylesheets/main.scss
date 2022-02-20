@@ -43,10 +43,10 @@ textarea {
 .hint-container {
   position: relative;
   display: flex;
-  text-align: center;
 
   &:hover .hint {
     display: flex;
+    text-align: center;
   }
 }
 
@@ -122,7 +122,7 @@ textarea {
   min-width: $width;
   max-height: $height;
   min-height: $height;
-  padding-top: 10vh;
+  padding-top: 5vh;
   overflow-y: scroll;
 }
 
@@ -149,5 +149,17 @@ textarea {
     min-width: 1px;
     min-height: $height;
     height: $height;
+  }
+}
+
+.flex {
+  display: flex;
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.wrap {
+    flex-wrap: wrap;
   }
 }
