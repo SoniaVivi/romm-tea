@@ -37,10 +37,10 @@ const darkTheme = {
   linkColor: "#0079d3",
   hintBackground: "rgba(255, 255, 255, 0.8)",
   navSelected: "rgba(85, 205, 252, 0.226)",
-  tagColor: "#b0ffa8",
+  tagColor: "#497244",
   modalBackdropColor: "rgba(0, 0, 0, 0.5)",
   navBorder: "#282828",
-  tagTextColor: "#0c0c0c",
+  tagTextColor: "#f2f2f2",
 };
 
 const ThemeWrapper = (props) => {
