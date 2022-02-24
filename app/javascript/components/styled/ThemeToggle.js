@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { toggleTheme } from "../../users/userSlice";
+import { toggleTheme } from "../users/userSlice";
 import moon from "svgs/moon.svg";
 import sun from "svgs/sun.svg";
-import { Icon } from "../../shared/Icon";
+import { Icon } from "../shared/Icon";
 
 const containerHeight = 24;
 const iconSize = 12;

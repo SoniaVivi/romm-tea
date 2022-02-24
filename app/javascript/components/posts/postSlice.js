@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const emptyState = { posts: {}, filters: { tags: [], title: "" } };
+const emptyState = {
+  posts: {},
+  filters: { tags: [], title: "" },
+  sort: "new",
+};
 
 export const slice = createSlice({
   name: "post",
@@ -34,9 +38,19 @@ export const slice = createSlice({
         return { payload: { title, tags } };
       },
     },
+    setSort: {
+      reducer(state, action) {
+        state.sort = action.payload.sort;
+      },
+      prepare(sort = "") {
+        return { payload: { sort } };
+      },
+    },
   },
 });
 
-export const { addPosts, setFilters } = slice.actions;
+export const { addPosts, setFilters, setSort } = slice.actions;
 
 export default slice.reducer;
+
+export const getSort = (state) => state.post.sort;

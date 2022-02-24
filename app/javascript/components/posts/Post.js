@@ -10,6 +10,9 @@ import { Icon } from "../shared/Icon";
 import waterDroplet from "svgs/droplet.svg";
 import Rating from "../shared/Rating";
 import OptionsContainer from "./OptionsContainer";
+import Tag from "../styled/Tag";
+import PublicEye from "svgs/eye.svg";
+import PrivateEye from "svgs/eyeSlash.svg";
 
 const PostBody = styled.div`
   position: relative;
@@ -83,6 +86,7 @@ const IconWrapper = styled.div`
 `;
 
 const Post = (props) => {
+  const currentUser = useSelector((state) => state.user.name);
   const data = useSelector((state) => state.post.posts[props.id]);
 
   if (data) {
@@ -104,6 +108,24 @@ const Post = (props) => {
         <OptionsContainer postId={data.id} />
         <Field>
           <h3>{data.name}</h3>
+          {currentUser == data.poster ? (
+            <IconWrapper className="hint-container">
+              <Icon
+                link={
+                  data.isPublic || data.isPublic == null
+                    ? PublicEye
+                    : PrivateEye
+                }
+                css={"margin-left: 5px;"}
+              />
+              <span className="hint" css={"width: 110px;"}>
+                Can be seen{" "}
+                {data.isPublic || data.isPublic == null
+                  ? "by anyone"
+                  : "only by you"}
+              </span>
+            </IconWrapper>
+          ) : null}
         </Field>
         <Field>
           <PosterDate>
@@ -160,9 +182,7 @@ const Post = (props) => {
           {[...data.tags]
             .sort((a, b) => a.localeCompare(b))
             .map((tag) => (
-              <span key={tag} className="tag">
-                {tag}
-              </span>
+              <Tag key={tag}>{tag}</Tag>
             ))}
         </TagContainer>
       </PostBody>

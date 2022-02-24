@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   devise_scope :user do
     get 'signup', to: 'devise/registrations#new'
   end
+  get '/user/:name', to: 'users#show', as: 'user'
   resources :posts, only: [:index, :create, :destroy, :edit]
 end

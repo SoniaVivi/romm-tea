@@ -27,12 +27,6 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${(props) => props.theme.postColor};
   }
 
-  .tag {
-    border: 1px solid ${(props) => props.theme.postColor};
-    background-color: ${(props) => props.theme.tagColor};
-    color: ${(props) => props.theme.tagTextColor}
-  }
-
   .exit {
     border: 1px solid ${(props) => props.theme.postColor};
 

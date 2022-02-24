@@ -1,0 +1,4 @@
+<%= react_component("UserShow",
+                    {posts: @posts,
+                     currentUserName: user_signed_in? ? current_user.name : ""},
+                    class: "container") %>

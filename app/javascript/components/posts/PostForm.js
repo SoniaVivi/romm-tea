@@ -6,6 +6,9 @@ import NumberForm from "../shared/formComponents/NumberForm";
 import Rating from "../shared/Rating";
 import ItemForm from "../shared/formComponents/ItemForm";
 import ItemSelection from "../shared/formComponents/ItemSelection";
+import PublicEye from "svgs/eye.svg";
+import PrivateEye from "svgs/eyeSlash.svg";
+import { Icon } from "../shared/Icon";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -53,6 +56,7 @@ const PostForm = (props) => {
     temp_unit: "",
     water_quantity: "",
     leaf_quantity: "",
+    is_public: true,
   };
   const [postData, setPostData] = useState(
     props.initialState
@@ -61,6 +65,7 @@ const PostForm = (props) => {
           temp_unit: props.initialState.tempUnit,
           water_quantity: props.initialState.waterQuantity ?? "",
           leaf_quantity: props.initialState.leafQuantity ?? "",
+          is_public: props.initialState.isPublic ?? true,
         }
       : emptyState
   );
@@ -79,11 +84,22 @@ const PostForm = (props) => {
           <div></div>
           <div></div>
         </div>
-        <TextForm
-          placeholder="Name"
-          onChange={onChangeFunc("name")}
-          value={postData.name}
-        />
+        <div className="flex">
+          <TextForm
+            placeholder="Name"
+            onChange={onChangeFunc("name")}
+            value={postData.name}
+          />
+          <ItemSelection
+            value={postData.is_public}
+            items={[true, false]}
+            onClick={(newVal) =>
+              setPostData((prev) => ({ ...prev, is_public: newVal }))
+            }
+            displayFunc={(val) => <Icon link={val ? PublicEye : PrivateEye} />}
+            cssString={"min-height: 39px; max-height: 39px; margin-top: 0;"}
+          />
+        </div>
         <RatingWrapper>
           <Rating
             currentRating={postData.rating}
@@ -131,6 +147,7 @@ const PostForm = (props) => {
           childType="number"
         />
         <textarea
+          css={"width: 240px;"}
           placeholder="Notes"
           onChange={onChangeFunc("notes")}
           value={postData.notes}
@@ -163,10 +180,11 @@ const PostForm = (props) => {
         <SubmitButton
           className="hover"
           onClick={() => {
-            const { tags, ...data } = postData;
+            const { tags, is_public, ...data } = postData;
             props.submitFunc({
               formData: JSON.stringify(data),
               tags: JSON.stringify(tags),
+              is_public: JSON.stringify(is_public),
             });
           }}
         >

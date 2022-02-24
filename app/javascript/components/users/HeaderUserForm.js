@@ -5,17 +5,19 @@ import person from "svgs/person.svg";
 import DropdownButton from "../shared/dropdown/DropdownButton";
 import DropdownContainer from "../shared/dropdown/DropdownContainer";
 import { Icon } from "../shared/Icon";
-import { NavOption } from "../shared/NavOption";
+import { NavOption } from "../navBar/NavOption";
 import sendAjaxRequest from "../shared/sendAjaxRequest";
 import Login from "./Login";
 import Signup from "./Signup";
 import { setUserName } from "./userSlice";
+import { setFilters } from "../posts/postSlice";
 
 const personIconSize = 25;
 
 const PersonIconContainer = styled(NavOption)`
   align-self: center;
-  min-width: 110px;
+  min-width: fit-content;
+  width: 110px;
   height: ${personIconSize + 10}px;
   margin-right: 10px;
   padding: 0 10px;
@@ -62,9 +64,11 @@ const HeaderUserForm = () => {
 
   if (userName.length) {
     return (
-      <LoggedInUserContainer onClick={toggleModal}>
+      <LoggedInUserContainer
+        onClick={() => toggleModal() || dispatch(setFilters())}
+      >
         <PersonIcon link={person} />
-        <span>{userName}</span>
+        <a href={`/user/${userName}`}>{userName}</a>
         <DropdownContainer>
           <DropdownButton
             className="hover"

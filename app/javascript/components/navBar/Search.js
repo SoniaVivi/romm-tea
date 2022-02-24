@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { setFilters } from "../postSlice";
+import { setFilters } from "../posts/postSlice";
+import Tag from "../styled/Tag";
 
 const Container = styled.li`
   align-self: center;
+  flex-shrink: 1;
   display: flex;
   align-items: center;
-  min-width: 30px;
-  max-width: 500px;
+  flex-basis: 300px;
   height: 36px;
   margin-left: auto;
   margin-right: 15px;
@@ -22,13 +23,15 @@ const TagContainer = styled.ul`
   align-items: center;
 `;
 
-const Tag = styled.li`
+const NavTag = styled(Tag)`
   margin-bottom: 0;
   padding-bottom: 0;
   border-color: ${({ theme }) => theme.background};
   ${(props) => (props.isSelected ? "filter: grayscale(40%);" : "")}
-  border: 2px solid  ${(props) =>
+  border-color: ${(props) =>
     props.isSelected ? props.theme.hover : "transparent"};
+  border-width: 2px;
+  border-style: solid;
   user-select: none;
 `;
 
@@ -102,12 +105,16 @@ const Search = () => {
 
   return (
     <Container>
-      <input {...inputProps} onClick={() => setShowModal(true)}></input>
+      <input
+        {...inputProps}
+        onClick={() => setShowModal(true)}
+        css={"height: 100%;"}
+      ></input>
       <TagContainer onClick={() => setShowModal(true)}>
         {tags.map((tagName) => (
-          <Tag key={tagName} className="tag">
+          <NavTag key={tagName} className="tag" as="li">
             {tagName}
-          </Tag>
+          </NavTag>
         ))}
       </TagContainer>
       {showModal ? (
@@ -139,7 +146,7 @@ const Search = () => {
             ) : (
               <SearchTagContainer>
                 {postTags.map((tagName) => (
-                  <Tag
+                  <NavTag
                     key={tagName}
                     className="tag"
                     as="button"
@@ -153,7 +160,7 @@ const Search = () => {
                     }
                   >
                     {tagName}
-                  </Tag>
+                  </NavTag>
                 ))}
               </SearchTagContainer>
             )}

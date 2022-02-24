@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { NavOption } from "../../shared/NavOption";
-import sendAjaxRequest from "../../shared/sendAjaxRequest";
-import PostForm from "../PostForm";
-import { addPosts } from "../postSlice";
+import { NavOption } from "./NavOption";
+import sendAjaxRequest from "../shared/sendAjaxRequest";
+import PostForm from "../posts/PostForm";
+import { addPosts } from "../posts/postSlice";
 
 const HeaderContainer = styled(NavOption)`
   align-self: center;
@@ -21,6 +21,7 @@ const HeaderContainer = styled(NavOption)`
 `;
 
 const NavCreatePost = () => {
+  const isLoggedIn = useSelector((state) => !!state.user.name.length);
   const [showModal, setShowModal] = useState(false);
   const toggleModal = () => setShowModal((prev) => !prev);
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ const NavCreatePost = () => {
         toggleModal();
       }
     });
+  if (!isLoggedIn) {
+    return null;
+  }
 
   return (
     <HeaderContainer className="hover-outline">

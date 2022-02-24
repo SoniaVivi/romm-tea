@@ -1,13 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
-import HeaderUserForm from "../../users/HeaderUserForm";
-import { NavOption } from "../../shared/NavOption";
-import ThemeToggle from "./ThemeToggle";
+import HeaderUserForm from "../users/HeaderUserForm";
+import { NavOption } from "./NavOption";
+import ThemeToggle from "../styled/ThemeToggle";
+import usePostIds from "../posts/hooks/usePostIds";
+import NavCreatePost from "./NavCreatePost";
+import Search from "./Search";
 
 const childPadding = "10px";
 
-const HeaderContainer = styled.ul`
+const NavBarHeader = styled.ul`
   position: sticky;
   top: 0;
   z-index: 2;
@@ -16,12 +18,15 @@ const HeaderContainer = styled.ul`
   width: 960px;
   height: 48px;
   margin-left: 5px;
+  padding-left: ${childPadding};
   ${({ theme }) => theme.postMarginBottom}
   border: 1px solid ${(props) => props.theme.navBorder};
   font-size: 16px;
+  background-color: ${(props) => props.theme.postColor};
 
   * {
     font-weight: 600;
+    color: ${(props) => props.theme.text};
   }
 `;
 
@@ -99,23 +104,27 @@ const Divider = styled.div`
   background-color: ${({ theme }) => theme.text};
 `;
 
-const PostHeader = (props) => {
-  const isSelected = (match) =>
-    match == props.currentSort ? "selected" : null;
+const PostHeader = () => {
+  const { sort: currentSort, setSort } = usePostIds();
+  const isSelected = (match) => (match == currentSort ? "selected" : null);
 
-  const setSort = (sort) => () => {
-    props.setSort(sort);
+  const setPostsSort = (sort) => () => {
+    setSort(sort);
     window.scrollTo(0, 0);
   };
+
   return (
-    <HeaderContainer className="background-post">
+    <NavBarHeader>
+      <NavOption as={"a"} onClick={() => (location.href = "/")}>
+        Home
+      </NavOption>
       <NavOption>
-        <SortButton onClick={setSort("new")} className={isSelected("new")}>
+        <SortButton onClick={setPostsSort("new")} className={isSelected("new")}>
           New
         </SortButton>
       </NavOption>
       <NavOption>
-        <SortButton onClick={setSort("top")} className={isSelected("top")}>
+        <SortButton onClick={setPostsSort("top")} className={isSelected("top")}>
           Top
         </SortButton>
       </NavOption>
@@ -124,7 +133,7 @@ const PostHeader = (props) => {
         <ul className="background-post">
           <li>
             <button
-              onClick={setSort("high-low")}
+              onClick={setPostsSort("high-low")}
               className={isSelected("high-low")}
             >
               <span>High</span>
@@ -134,7 +143,7 @@ const PostHeader = (props) => {
           </li>
           <li>
             <button
-              onClick={setSort("low-high")}
+              onClick={setPostsSort("low-high")}
               className={isSelected("low-high")}
             >
               <span>Low</span>
@@ -144,17 +153,12 @@ const PostHeader = (props) => {
           </li>
         </ul>
       </PriceMenu>
-      {props.children}
+      <Search />
+      <NavCreatePost />
       <HeaderUserForm />
       <ThemeToggle />
-    </HeaderContainer>
+    </NavBarHeader>
   );
 };
 
 export default PostHeader;
-
-PostHeader.propTypes = {
-  setSort: PropTypes.func.isRequired,
-  currentSort: PropTypes.string.isRequired,
-  children: PropTypes.array,
-};

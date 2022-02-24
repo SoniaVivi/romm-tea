@@ -8,6 +8,7 @@ class Post < ApplicationRecord
   validates :temp_unit, inclusion: { in: %w[celsius fahrenheit] }
   validates :water_quantity, length: { in: 0..12 }
   validates :leaf_quantity, length: { in: 0..32 }
+  validates :is_public, inclusion: { in: [false, true] }
 
   belongs_to :poster, class_name: 'User'
   has_many :post_tags
@@ -29,6 +30,7 @@ class Post < ApplicationRecord
       tags: tags.map { |tag| tag.name },
       waterQuantity: water_quantity,
       leafQuantity: leaf_quantity,
+      isPublic: is_public,
     }
   end
 end

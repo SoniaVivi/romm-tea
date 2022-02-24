@@ -27,7 +27,7 @@ const Option = styled(DropdownButton)`
 
 const ItemSelection = (props) => {
   return (
-    <Container>
+    <Container css={props.cssString ?? ""}>
       <div className="divider vertical"></div>
       {props.items.map((itemText, i) => (
         <React.Fragment key={i}>
@@ -53,4 +53,5 @@ ItemSelection.propTypes = {
   items: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
   displayFunc: PropTypes.func,
+  cssString: PropTypes.string,
 };

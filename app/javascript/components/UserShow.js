@@ -1,21 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
 import ThemeWrapper from "./styled/ThemeWrapper";
-import PostIndex from "./posts/PostIndex";
+import Profile from "./users/Profile";
 import StoreWrapper from "./StoreWrapper";
 
-const Index = (props) => {
+const UserShow = (props) => {
   return (
     <StoreWrapper>
       <ThemeWrapper>
-        <PostIndex {...props} />
+        <Profile {...props} />
       </ThemeWrapper>
     </StoreWrapper>
   );
 };
 
-export default Index;
-
-Index.propTypes = {
-  posts: PropTypes.array.isRequired,
-};
+export default UserShow;

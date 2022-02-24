@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_20_055923) do
+ActiveRecord::Schema.define(version: 2022_02_21_064429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2022_02_20_055923) do
     t.string "temp_unit"
     t.string "water_quantity"
     t.string "leaf_quantity"
+    t.boolean "is_public"
     t.index ["poster_id"], name: "index_posts_on_poster_id"
   end
 
