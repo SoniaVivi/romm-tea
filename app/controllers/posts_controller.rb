@@ -4,7 +4,8 @@ class PostsController < ApplicationController
   def index
     @posts =
       Post
-        .where(is_public: true, is_public: nil)
+        .where(is_public: true)
+        .or(Post.where(is_public: nil))
         .order(created_at: :asc)
         .limit(50)
         .map { |post| post.get_data }

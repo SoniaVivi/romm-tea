@@ -17,6 +17,8 @@ tags =
     Tag.create!(name: name)
   end
 
+i = 0
+
 (
   [
     {
@@ -54,6 +56,11 @@ tags =
       name: post_data[:name],
       link: post_data[:link],
       poster_id: test_user.id,
+      is_public: (i % 4 != 0),
+      temp_unit: (i % 2 == 0) ? 'celsius' : 'fahrenheit',
+      leaf_quantity: (i % 2 == 0) ? "#{i}g" : '',
+      water_quantity: (i % 2 == 0) ? "#{i * 20}ml" : '',
     )
   rand(tags.length + 1).times { |i| PostTag.create!(tag: tags[i], post: post) }
+  i += 1
 end

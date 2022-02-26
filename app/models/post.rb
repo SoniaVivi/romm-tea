@@ -14,6 +14,8 @@ class Post < ApplicationRecord
   has_many :post_tags
   has_many :tags, through: :post_tags
 
+  has_many :votes, foreign_key: 'post_id'
+
   def get_data
     {
       id: id,

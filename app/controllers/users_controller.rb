@@ -8,7 +8,8 @@ class UsersController < ApplicationController
       else
         current_user
           .posts
-          .where(is_public: true, is_public: nil)
+          .where(is_public: true)
+          .or(current_user.posts.where(is_public: nil))
           .limit(50)
           .map { |post| post.get_data }
       end
