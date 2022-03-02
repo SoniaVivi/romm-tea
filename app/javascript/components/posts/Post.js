@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import thermometer from "svgs/thermometer.svg";
 import clock from "svgs/clock.svg";
@@ -13,8 +13,7 @@ import OptionsContainer from "./OptionsContainer";
 import Tag from "../styled/Tag";
 import PublicEye from "svgs/eye.svg";
 import PrivateEye from "svgs/eyeSlash.svg";
-import sendAjaxRequest from "../shared/sendAjaxRequest";
-import { setScore } from "./postSlice";
+import VoteField from "./postChildren/VoteField";
 
 const PostBody = styled.div`
   position: relative;
@@ -70,7 +69,7 @@ const TagContainer = styled.div`
 
 const PosterDate = styled.span`
   font-size: 12px;
-  color: #808080;
+  color: ${({ theme }) => theme.lightText};
 `;
 
 const LeafQuantityWrapper = styled(Field)`
@@ -88,7 +87,6 @@ const IconWrapper = styled.div`
 `;
 
 const Post = (props) => {
-  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.name);
   const data = useSelector((state) => state.post.posts[props.id]);
 
@@ -108,33 +106,6 @@ const Post = (props) => {
         return `${data.price}${"0" * (decimalPlace - data.price.length)}`;
       }
     })();
-
-  const onVote = (voteType) => () => {
-    let requestType = "POST";
-    if (
-      (voteType == "down" && data.voteType == -1) ||
-      (voteType == "up" && data.voteType == 1)
-    ) {
-      requestType = "DELETE";
-    }
-    sendAjaxRequest(
-      requestType,
-      "/votes",
-      {
-        post_id: data.id,
-        vote_type: voteType,
-      },
-      (response) =>
-        response.success &&
-        dispatch(
-          setScore(
-            data.id,
-            requestType == "DELETE" ? 0 : voteType,
-            response.score
-          )
-        )
-    );
-  };
 
   return (
     <PostBody className="background-post">
@@ -167,9 +138,11 @@ const Post = (props) => {
       <Field>
         <Rating currentRating={data.rating} />
         <Divider size={"4px"} />
-        {data.score}
-        <button onClick={onVote("up")}>+</button>
-        <button onClick={onVote("down")}>-</button>
+        <VoteField
+          voteType={data.voteType}
+          postId={data.id}
+          score={data.score}
+        />
       </Field>
       <Field>
         <IconWrapper className="hint-container">

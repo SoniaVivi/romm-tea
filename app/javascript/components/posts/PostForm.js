@@ -66,6 +66,7 @@ const PostForm = (props) => {
           water_quantity: props.initialState.waterQuantity ?? "",
           leaf_quantity: props.initialState.leafQuantity ?? "",
           is_public: props.initialState.isPublic ?? true,
+          time: props.initialState.time ?? [0, 0, 0],
         }
       : emptyState
   );
@@ -93,9 +94,10 @@ const PostForm = (props) => {
           <ItemSelection
             value={postData.is_public}
             items={[true, false]}
-            onClick={(newVal) =>
-              setPostData((prev) => ({ ...prev, is_public: newVal }))
-            }
+            onClick={(newVal) => {
+              console.log(newVal);
+              setPostData((prev) => ({ ...prev, is_public: newVal }));
+            }}
             displayFunc={(val) => <Icon link={val ? PublicEye : PrivateEye} />}
             cssString={"min-height: 39px; max-height: 39px; margin-top: 0;"}
           />

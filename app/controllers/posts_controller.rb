@@ -79,6 +79,6 @@ class PostsController < ApplicationController
     filtered_array
   end
   def is_public?(json_string)
-    JSON.parse(json_string) == 'true'
+    !!JSON.parse(json_string)
   end
 end

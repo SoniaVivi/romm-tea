@@ -2,6 +2,7 @@ class Post < ApplicationRecord
   validates_inclusion_of :rating, in: 0..5
   validates :temperature, presence: true
   validates :price, presence: true
+  validates :time, length: { in: 0..20 }
   validates :notes, length: { in: 0..512 }
   validates :name, length: { in: 1..128 }
   validates :temp_unit, presence: true

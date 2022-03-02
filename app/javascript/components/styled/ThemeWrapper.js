@@ -9,6 +9,7 @@ const defaultStyles = {
   postSidePadding: "10",
   postMarginBottom: "margin-bottom: 15px;",
   minWidth: "492",
+  lightText: "#808080",
 };
 
 const lightTheme = {
