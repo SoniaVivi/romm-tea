@@ -46,10 +46,32 @@ export const slice = createSlice({
         return { payload: { sort } };
       },
     },
+    setScore: {
+      reducer(state, action) {
+        let change;
+        switch (action.payload.voteType) {
+          case "up":
+            change = 1;
+            break;
+          case "down":
+            change = -1;
+            break;
+          case 0:
+            change = state.posts[action.payload.id].voteType == 1 ? -1 : 1;
+            break;
+        }
+        state.posts[action.payload.id].score = action.payload.score;
+        state.posts[action.payload.id].voteType =
+          action.payload.voteType == 0 ? 0 : change;
+      },
+      prepare(postId, voteType, score) {
+        return { payload: { id: postId, voteType: voteType, score } };
+      },
+    },
   },
 });
 
-export const { addPosts, setFilters, setSort } = slice.actions;
+export const { addPosts, setFilters, setSort, setScore } = slice.actions;
 
 export default slice.reducer;
 

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import thermometer from "svgs/thermometer.svg";
 import clock from "svgs/clock.svg";
@@ -13,6 +13,8 @@ import OptionsContainer from "./OptionsContainer";
 import Tag from "../styled/Tag";
 import PublicEye from "svgs/eye.svg";
 import PrivateEye from "svgs/eyeSlash.svg";
+import sendAjaxRequest from "../shared/sendAjaxRequest";
+import { setScore } from "./postSlice";
 
 const PostBody = styled.div`
   position: relative;
@@ -86,110 +88,140 @@ const IconWrapper = styled.div`
 `;
 
 const Post = (props) => {
+  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.name);
   const data = useSelector((state) => state.post.posts[props.id]);
 
-  if (data) {
-    const price =
-      "$" +
-      (() => {
-        const decimalPlace = data.price.search(/\./);
-        if (decimalPlace == data.price.length - 3) {
-          return data.price;
-        } else if (decimalPlace == -1) {
-          return `${data.price}.00`;
-        } else {
-          return `${data.price}${"0" * (decimalPlace - data.price.length)}`;
-        }
-      })();
-
-    return (
-      <PostBody className="background-post">
-        <OptionsContainer postId={data.id} />
-        <Field>
-          <h3>{data.name}</h3>
-          {currentUser == data.poster ? (
-            <IconWrapper className="hint-container">
-              <Icon
-                link={
-                  data.isPublic || data.isPublic == null
-                    ? PublicEye
-                    : PrivateEye
-                }
-                css={"margin-left: 5px;"}
-              />
-              <span className="hint" css={"width: 110px;"}>
-                Can be seen{" "}
-                {data.isPublic || data.isPublic == null
-                  ? "by anyone"
-                  : "only by you"}
-              </span>
-            </IconWrapper>
-          ) : null}
-        </Field>
-        <Field>
-          <PosterDate>
-            Posted by {data.poster}{" "}
-            {relativeTime(new Date(data.posted), { croppedFormat: true })} ago
-          </PosterDate>
-        </Field>
-        <Field>
-          <Rating currentRating={data.rating} />
-        </Field>
-        <Field>
-          <IconWrapper className="hint-container">
-            <Icon link={thermometer} marginRight={"2px"} />
-            {data.temperature}
-            {data.tempUnit == "fahrenheit" ? "℉" : "℃"}
-            <span className="hint">Temperature</span>
-          </IconWrapper>
-          <Divider size={"4px"} />
-          <IconWrapper className="hint-container">
-            <Icon link={clock} marginRight={"3px"} />
-            {data.time ? data?.time.join(" ") : null}
-            <span
-              className="hint"
-              css={`
-                width: 180px;
-              `}
-            >
-              Infusion time for each consequent cup in seconds
-            </span>
-          </IconWrapper>
-        </Field>
-        <Field>{price}</Field>
-        {data.leafQuantity ? (
-          <LeafQuantityWrapper className="hint-container">
-            <span css={"width: 40px;"}>茶葉</span>
-            <span>{data.leafQuantity}</span>
-            <span className="hint">Leaf Quantity</span>
-          </LeafQuantityWrapper>
-        ) : null}
-        {data.waterQuantity ? (
-          <Field className="hint-container">
-            <Icon link={waterDroplet} marginRight={"3px"} />
-            <span>{data.waterQuantity}</span>
-            <span className="hint" css={"left: 15%;"}>
-              Water Quantity
-            </span>
-          </Field>
-        ) : null}
-        <p>{data.notes}</p>
-        <Field>
-          <TrimmedLink href={data.link} />
-        </Field>
-        <TagContainer>
-          {[...data.tags]
-            .sort((a, b) => a.localeCompare(b))
-            .map((tag) => (
-              <Tag key={tag}>{tag}</Tag>
-            ))}
-        </TagContainer>
-      </PostBody>
-    );
-  } else {
+  if (!data) {
     return <PostBody></PostBody>;
   }
+
+  const price =
+    "$" +
+    (() => {
+      const decimalPlace = data.price.search(/\./);
+      if (decimalPlace == data.price.length - 3) {
+        return data.price;
+      } else if (decimalPlace == -1) {
+        return `${data.price}.00`;
+      } else {
+        return `${data.price}${"0" * (decimalPlace - data.price.length)}`;
+      }
+    })();
+
+  const onVote = (voteType) => () => {
+    let requestType = "POST";
+    if (
+      (voteType == "down" && data.voteType == -1) ||
+      (voteType == "up" && data.voteType == 1)
+    ) {
+      requestType = "DELETE";
+    }
+    sendAjaxRequest(
+      requestType,
+      "/votes",
+      {
+        post_id: data.id,
+        vote_type: voteType,
+      },
+      (response) =>
+        response.success &&
+        dispatch(
+          setScore(
+            data.id,
+            requestType == "DELETE" ? 0 : voteType,
+            response.score
+          )
+        )
+    );
+  };
+
+  return (
+    <PostBody className="background-post">
+      <OptionsContainer postId={data.id} />
+      <Field>
+        <h3>{data.name}</h3>
+        {currentUser == data.poster ? (
+          <IconWrapper className="hint-container">
+            <Icon
+              link={
+                data.isPublic || data.isPublic == null ? PublicEye : PrivateEye
+              }
+              css={"margin-left: 5px;"}
+            />
+            <span className="hint" css={"width: 110px;"}>
+              Can be seen{" "}
+              {data.isPublic || data.isPublic == null
+                ? "by anyone"
+                : "only by you"}
+            </span>
+          </IconWrapper>
+        ) : null}
+      </Field>
+      <Field>
+        <PosterDate>
+          Posted by {data.poster}{" "}
+          {relativeTime(new Date(data.posted), { croppedFormat: true })} ago
+        </PosterDate>
+      </Field>
+      <Field>
+        <Rating currentRating={data.rating} />
+        <Divider size={"4px"} />
+        {data.score}
+        <button onClick={onVote("up")}>+</button>
+        <button onClick={onVote("down")}>-</button>
+      </Field>
+      <Field>
+        <IconWrapper className="hint-container">
+          <Icon link={thermometer} marginRight={"2px"} />
+          {data.temperature}
+          {data.tempUnit == "fahrenheit" ? "℉" : "℃"}
+          <span className="hint">Temperature</span>
+        </IconWrapper>
+        <Divider size={"4px"} />
+        <IconWrapper className="hint-container">
+          <Icon link={clock} marginRight={"3px"} />
+          {data.time ? data?.time.join(" ") : null}
+          <span
+            className="hint"
+            css={`
+              width: 180px;
+            `}
+          >
+            Infusion time for each consequent cup in seconds
+          </span>
+        </IconWrapper>
+      </Field>
+      <Field>{price}</Field>
+      {data.leafQuantity ? (
+        <LeafQuantityWrapper className="hint-container">
+          <span css={"width: 40px;"}>茶葉</span>
+          <span>{data.leafQuantity}</span>
+          <span className="hint">Leaf Quantity</span>
+        </LeafQuantityWrapper>
+      ) : null}
+      {data.waterQuantity ? (
+        <Field className="hint-container">
+          <Icon link={waterDroplet} marginRight={"3px"} />
+          <span>{data.waterQuantity}</span>
+          <span className="hint" css={"left: 15%;"}>
+            Water Quantity
+          </span>
+        </Field>
+      ) : null}
+      <p>{data.notes}</p>
+      <Field>
+        <TrimmedLink href={data.link} />
+      </Field>
+      <TagContainer>
+        {[...data.tags]
+          .sort((a, b) => a.localeCompare(b))
+          .map((tag) => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+      </TagContainer>
+    </PostBody>
+  );
 };
 
 export default Post;

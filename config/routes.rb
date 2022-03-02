@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   end
   get '/user/:name', to: 'users#show', as: 'user'
   resources :posts, only: [:index, :create, :destroy, :edit]
+  delete '/votes', to: 'votes#destroy'
+  resources :votes, only: [:create, :destroy]
 end

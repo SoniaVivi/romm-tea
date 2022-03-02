@@ -8,7 +8,7 @@ class PostsController < ApplicationController
         .or(Post.where(is_public: nil))
         .order(created_at: :asc)
         .limit(50)
-        .map { |post| post.get_data }
+        .map { |post| post.get_data(current_user_id) }
   end
   def create
     return render json: { success: false } if !user_signed_in?

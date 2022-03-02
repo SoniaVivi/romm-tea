@@ -16,7 +16,7 @@ class Post < ApplicationRecord
 
   has_many :votes, foreign_key: 'post_id'
 
-  def get_data
+  def get_data(user_id = nil)
     {
       id: id,
       posted: created_at.strftime('%FT%H:%M:%S'),
@@ -33,6 +33,21 @@ class Post < ApplicationRecord
       waterQuantity: water_quantity,
       leafQuantity: leaf_quantity,
       isPublic: is_public,
+      score: score,
+      voteType: user_id.nil? ? 0 : get_vote(user_id),
     }
+  end
+
+  private
+
+  def get_vote(user_id)
+    result = votes.where(voter_id: user_id)
+    return 0 if result.nil? or result.empty?
+    case result[0].vote_type
+    when 'down'
+      -1
+    when 'up'
+      1
+    end
   end
 end

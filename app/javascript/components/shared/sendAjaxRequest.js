@@ -1,4 +1,4 @@
-const sendAjaxRequest = (type, url, data, onSuccess = {}) => {
+const sendAjaxRequest = (type, url, data, onSuccess = () => {}) => {
   return new Promise((resolve, reject) => {
     Rails.ajax({
       type: type,
@@ -7,7 +7,7 @@ const sendAjaxRequest = (type, url, data, onSuccess = {}) => {
       data: (() => {
         return new URLSearchParams(data).toString();
       })(),
-      success: (data) => resolve({ ...data, ...onSuccess }),
+      success: onSuccess,
       error: (e) => reject(e),
     });
   });
