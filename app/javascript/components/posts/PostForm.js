@@ -93,7 +93,6 @@ const PostForm = (props) => {
             value={postData.is_public}
             items={[true, false]}
             onClick={(newVal) => {
-              console.log(newVal);
               setPostData((prev) => ({ ...prev, is_public: newVal }));
             }}
             displayFunc={(val) => <Icon link={val ? PublicEye : PrivateEye} />}
@@ -107,6 +106,7 @@ const PostForm = (props) => {
               setPostData((prev) => ({ ...prev, rating: i + 1 }))
             }
             starSize={30}
+            cssText="cursor: pointer;"
           />
         </RatingWrapper>
         <div className="flex">

@@ -11,13 +11,14 @@ const HeaderContainer = styled(NavOption)`
   min-width: fit-content;
   height: 35px;
   margin: 0 10px 0 15px;
-  font-size: 14px;
+`;
 
-  > button {
-    width: 100%;
-    height: 100%;
-    padding: 0 20px;
-  }
+const StyledButton = styled.button`
+  width: 100%;
+  height: 100%;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 const NavCreatePost = () => {
@@ -38,7 +39,7 @@ const NavCreatePost = () => {
 
   return (
     <HeaderContainer className="hover-outline">
-      <button onClick={toggleModal}>New post</button>
+      <StyledButton onClick={toggleModal}>New post</StyledButton>
       {showModal ? (
         <PostForm toggle={toggleModal} submitFunc={submitPost} />
       ) : null}

@@ -18,6 +18,7 @@ const Rating = (props) => {
               color="#25c5df"
               onClick={onClick("filled", i)}
               size={props.starSize ?? null}
+              css={props.cssText ?? ""}
             />
           ) : (
             <Icon
@@ -26,6 +27,7 @@ const Rating = (props) => {
               color="#25c5df"
               onClick={onClick("empty", i)}
               size={props.starSize ?? null}
+              css={props.cssText ?? ""}
             />
           )
         )}
@@ -39,4 +41,5 @@ Rating.propTypes = {
   currentRating: PropTypes.number.isRequired,
   onClick: PropTypes.func,
   starSize: PropTypes.string,
+  cssText: PropTypes.string,
 };

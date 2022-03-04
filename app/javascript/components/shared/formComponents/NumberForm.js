@@ -53,9 +53,9 @@ const NumberForm = (props) => {
       ></input>
       <div className="divider vertical"></div>
       <ArrowContainer>
-        <Icon onClick={valueStepFunc()} link={Arrow} />
+        <Icon onClick={valueStepFunc()} link={Arrow} className="hover" />
         <div className="divider"></div>
-        <Icon onClick={valueStepFunc(-1)} link={Arrow} />
+        <Icon onClick={valueStepFunc(-1)} link={Arrow} className="hover" />
       </ArrowContainer>
     </NumberFormWrapper>
   );
