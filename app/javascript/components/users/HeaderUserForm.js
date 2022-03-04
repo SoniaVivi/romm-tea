@@ -5,12 +5,13 @@ import person from "svgs/person.svg";
 import DropdownButton from "../shared/dropdown/DropdownButton";
 import DropdownContainer from "../shared/dropdown/DropdownContainer";
 import { Icon } from "../shared/Icon";
-import { NavOption } from "../navBar/NavOption";
+import { NavOption } from "../navBar/navChildren/NavOption";
 import sendAjaxRequest from "../shared/sendAjaxRequest";
-import Login from "./Login";
-import Signup from "./Signup";
+import Login from "./modalPages/Login";
+import Signup from "./modalPages/Signup";
 import { setUserName } from "./userSlice";
 import { setFilters } from "../posts/postSlice";
+import ExitButton from "../shared/ExitButton";
 
 const personIconSize = 25;
 
@@ -22,6 +23,7 @@ const PersonIconContainer = styled(NavOption)`
   margin-right: 10px;
   padding: 0 10px;
   border: 1px solid ${({ theme }) => theme.postColor};
+  cursor: pointer;
 
   &:hover {
     border-color: ${({ theme }) => theme.navBorder};
@@ -93,10 +95,7 @@ const HeaderUserForm = () => {
       {showModal ? (
         <div className="modal">
           <Wrapper className="modal-wrapper">
-            <div onClick={toggleModal} className="exit">
-              <div></div>
-              <div></div>
-            </div>
+            <ExitButton toggle={toggleModal} />
             {page == "login" ? (
               <Login toggleModal={toggleModal} togglePage={togglePage} />
             ) : (

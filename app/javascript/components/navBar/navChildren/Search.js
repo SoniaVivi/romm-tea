@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { setFilters } from "../posts/postSlice";
-import Tag from "../styled/Tag";
+import { setFilters } from "../../posts/postSlice";
+import Tag from "../../styled/Tag";
 
 const Container = styled.li`
   align-self: center;

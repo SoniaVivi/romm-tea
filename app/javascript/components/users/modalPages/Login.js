@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { FormActionButton } from "../shared/formComponents/FormActionButton";
-import { TextForm } from "../shared/formComponents/TextForm";
-import { PageLink } from "../shared/formComponents/PageLink";
-import sendAjaxRequest from "../shared/sendAjaxRequest";
+import { FormActionButton } from "../../shared/formComponents/FormActionButton";
+import { TextForm } from "../../shared/formComponents/TextForm";
+import { PageLink } from "../../shared/formComponents/PageLink";
+import sendAjaxRequest from "../../shared/sendAjaxRequest";
 import { useDispatch } from "react-redux";
-import { setUserName } from "./userSlice";
+import { setUserName } from "../userSlice";
 
 const Login = (props) => {
   const [userInfo, setUserInfo] = useState({
@@ -46,7 +46,10 @@ const Login = (props) => {
         onKeyDown={(e) => (e.code == "Enter" ? sendFormData() : "")}
       ></TextForm>
       <PageLink>
-        Don&apos;t have an account? <a onClick={props.togglePage}>Sign up</a>
+        Don&apos;t have an account?{" "}
+        <a onClick={props.togglePage} css={"font-weight: 700;"}>
+          Sign up
+        </a>
       </PageLink>
       <FormActionButton className="hover" onClick={sendFormData}>
         Login

@@ -1,7 +1,7 @@
 import React, { useReducer, useRef, useState } from "react";
 import styled from "styled-components";
 import ExitButton from "../shared/ExitButton";
-import { NavOption } from "./NavOption";
+import { NavOption } from "./navChildren/NavOption";
 
 const TimerContainer = styled.div`
   justify-content: center;
@@ -46,6 +46,7 @@ const NavButton = styled.button`
   height: 100%;
   padding: 0 10px;
   font-size: 16px;
+  font-weight: 600;
 `;
 
 const Timer = () => {

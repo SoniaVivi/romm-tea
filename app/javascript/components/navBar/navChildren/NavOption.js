@@ -7,4 +7,5 @@ export const NavOption = styled.li`
   min-width: fit-content;
   width: fit-content;
   border-radius: 0;
+  font-weight: 600;
 `;

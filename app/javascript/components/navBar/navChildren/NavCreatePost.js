@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { NavOption } from "./NavOption";
-import sendAjaxRequest from "../shared/sendAjaxRequest";
-import PostForm from "../posts/PostForm";
-import { addPosts } from "../posts/postSlice";
+import sendAjaxRequest from "../../shared/sendAjaxRequest";
+import PostForm from "../../posts/PostForm";
+import { addPosts } from "../../posts/postSlice";
 
 const HeaderContainer = styled(NavOption)`
   align-self: center;

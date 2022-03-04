@@ -24,6 +24,7 @@ const Container = styled.li`
   border: 1px solid ${(props) => props.theme.navBorder};
   border-radius: ${containerHeight * 0.75}px;
   background-color: ${(props) => props.theme.background};
+  cursor: pointer;
 `;
 
 const Circle = styled.div`
@@ -41,7 +42,6 @@ const Circle = styled.div`
 `;
 
 const ThemeToggle = () => {
-  //eslint-disable-next-line
   const theme = useSelector((state) => state.user.theme);
   const dispatch = useDispatch();
 
