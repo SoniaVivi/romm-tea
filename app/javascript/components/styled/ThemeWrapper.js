@@ -33,7 +33,7 @@ const darkTheme = {
   invertedText: "#0c0c0c",
   background: "#000000",
   postColor: "#0a090c",
-  borderColor: "#0c0c0c",
+  borderColor: "#121414",
   hover: "rgba(85, 205, 252, 0.4)",
   linkColor: "#0079d3",
   hintBackground: "rgba(255, 255, 255, 0.8)",
