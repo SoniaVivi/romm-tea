@@ -9,6 +9,7 @@ import ItemSelection from "../shared/formComponents/ItemSelection";
 import PublicEye from "svgs/eye.svg";
 import PrivateEye from "svgs/eyeSlash.svg";
 import { Icon } from "../shared/Icon";
+import ExitButton from "../shared/ExitButton";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -81,10 +82,7 @@ const PostForm = (props) => {
   return (
     <div className="modal">
       <Wrapper className="modal-wrapper">
-        <div onClick={props.toggle} className="exit">
-          <div></div>
-          <div></div>
-        </div>
+        <ExitButton toggle={props.toggle} />
         <div className="flex">
           <TextForm
             placeholder="Name"

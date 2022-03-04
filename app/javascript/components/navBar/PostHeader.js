@@ -6,6 +6,7 @@ import ThemeToggle from "../styled/ThemeToggle";
 import usePostIds from "../posts/hooks/usePostIds";
 import NavCreatePost from "./NavCreatePost";
 import Search from "./Search";
+import Timer from "./Timer";
 
 const childPadding = "10px";
 
@@ -153,6 +154,7 @@ const PostHeader = () => {
           </li>
         </ul>
       </PriceMenu>
+      <Timer />
       <Search />
       <NavCreatePost />
       <HeaderUserForm />
