@@ -19,7 +19,8 @@ const usePostIds = (useFilters = true) => {
             if (!useFilters) return true;
 
             if (filters.title.length) {
-              if (!post.name.match(filters.title)) return false;
+              if (!post.name.toLowerCase().match(filters.title.toLowerCase()))
+                return false;
             }
 
             for (const tag of filters.tags) {
