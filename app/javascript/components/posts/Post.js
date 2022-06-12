@@ -74,6 +74,7 @@ const PosterDate = styled.span`
 
 const LeafQuantityWrapper = styled(Field)`
   align-items: flex-start;
+  max-width: fit-content;
 
   .hint {
     top: 30px;
@@ -135,14 +136,11 @@ const Post = (props) => {
           {relativeTime(new Date(data.posted), { croppedFormat: true })} ago
         </PosterDate>
       </Field>
-      <Field>
+      <Field className="hint-container" css={"max-width: 80px;"}>
         <Rating currentRating={data.rating} />
-        <Divider size={"4px"} />
-        <VoteField
-          voteType={data.voteType}
-          postId={data.id}
-          score={data.score}
-        />
+        <span className="hint" css={"min-width: 140px;"}>
+          Poster&apos;s personal rating
+        </span>
       </Field>
       <Field>
         <IconWrapper className="hint-container">
@@ -170,14 +168,16 @@ const Post = (props) => {
         <LeafQuantityWrapper className="hint-container">
           <span css={"width: 40px;"}>茶葉</span>
           <span>{data.leafQuantity}</span>
-          <span className="hint">Leaf Quantity</span>
+          <span className="hint" css={"width: 108px;"}>
+            Leaf Quantity
+          </span>
         </LeafQuantityWrapper>
       ) : null}
       {data.waterQuantity ? (
-        <Field className="hint-container">
+        <Field className="hint-container" css={"max-width: fit-content;"}>
           <Icon link={waterDroplet} marginRight={"3px"} />
           <span>{data.waterQuantity}</span>
-          <span className="hint" css={"left: 15%;"}>
+          <span className="hint" css={"left: 15%; width: 120px;"}>
             Water Quantity
           </span>
         </Field>
@@ -185,6 +185,13 @@ const Post = (props) => {
       <p>{data.notes}</p>
       <Field>
         <TrimmedLink href={data.link} />
+      </Field>
+      <Field>
+        <VoteField
+          voteType={data.voteType}
+          postId={data.id}
+          score={data.score}
+        />
       </Field>
       <TagContainer>
         {[...data.tags]

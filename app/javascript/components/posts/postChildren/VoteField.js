@@ -25,7 +25,6 @@ const ScoreDisplay = styled.span`
   ${padding}
   font-size: 15px;
   user-select: none;
-  // background-color: ${(props) => props.theme.background};
 `;
 
 const voteButtonPadding = "3px";
@@ -34,10 +33,10 @@ const VoteButton = styled.button`
   padding: 0 ${voteButtonPadding};
   ${padding}
   font-size: 13px;
-
-  // &:first-child {
-  //   margin-left: -${voteButtonPadding};
-  // }
+  ${(props) =>
+    props.highlight
+      ? `background-color: ${props.theme.hover}; opacity: .8;`
+      : ""}
 `;
 
 const VoteField = (props) => {
@@ -71,11 +70,19 @@ const VoteField = (props) => {
   };
   return (
     <Container>
-      <VoteButton onClick={onVote("up")} className="hover">
+      <VoteButton
+        onClick={onVote("up")}
+        className="hover"
+        highlight={props.voteType == 1}
+      >
         Like
       </VoteButton>
       <ScoreDisplay>{props.score}</ScoreDisplay>
-      <VoteButton onClick={onVote("down")} className="hover">
+      <VoteButton
+        onClick={onVote("down")}
+        className="hover"
+        highlight={props.voteType == -1}
+      >
         Dislike
       </VoteButton>
     </Container>
