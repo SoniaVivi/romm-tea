@@ -17,6 +17,14 @@ class Post < ApplicationRecord
 
   has_many :votes, foreign_key: 'post_id'
 
+  scope :filter_by_tags,
+        ->(tags) {
+          joins(:post_tags)
+            .where('post_tags.tag_id': tags)
+            .having('COUNT(*) >= ?', tags.length)
+            .group(:id)
+        }
+
   def get_data(user_id = nil)
     {
       id: id,
@@ -37,6 +45,14 @@ class Post < ApplicationRecord
       score: score,
       voteType: user_id.nil? ? 0 : get_vote(user_id),
     }
+  end
+  def self.get_posts(order_by: { created_at: :asc }, tags: nil, title: nil)
+    statement = where(is_public: true).or(where(is_public: nil)).order(order_by)
+    if !title.nil?
+      statement =
+        statement.where('name LIKE ?', '%' + sanitize_sql_like(title) + '%')
+    end
+    tags.nil? ? statement : statement.filter_by_tags(tags)
   end
 
   private

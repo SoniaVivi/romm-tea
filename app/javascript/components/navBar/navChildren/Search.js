@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { setFilters } from "../../posts/postSlice";
+import { setFilters } from "../../redux/optionSlice";
+import { useGetTagsQuery } from "../../redux/postSlice";
 import Tag from "../../styled/Tag";
 
 const Container = styled.li`
@@ -73,24 +74,17 @@ const ModalWrapper = styled.div`
 `;
 
 const Search = () => {
-  const postTags = useSelector((state) => {
-    const posts = Object.values(state.post.posts);
-    if (!posts.length) return [];
-
-    return [
-      ...new Set(
-        posts.reduce(
-          (prev, post) => (prev && post?.tags ? [...prev, ...post.tags] : prev),
-          []
-        )
-      ),
-    ];
+  const { tags: postTags } = useGetTagsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      tags: data?.entities || {},
+    }),
   });
+
   const dispatch = useDispatch();
   const [text, setText] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("title");
-  const [tags, setTags] = useState([]);
+  const [tagIds, setTagIds] = useState([]);
   const inputProps = {
     type: "text",
     value: text,
@@ -100,7 +94,7 @@ const Search = () => {
   const closeModal = () => {
     setActiveTab("title");
     setShowModal(false);
-    dispatch(setFilters(text, tags));
+    dispatch(setFilters(text, tagIds));
   };
 
   return (
@@ -111,9 +105,9 @@ const Search = () => {
         css={"height: 100%;"}
       ></input>
       <TagContainer onClick={() => setShowModal(true)}>
-        {tags.map((tagName) => (
-          <NavTag key={tagName} className="tag" as="li">
-            {tagName}
+        {tagIds.map((tagId) => (
+          <NavTag key={tagId} className="tag" as="li">
+            {postTags[tagId].name}
           </NavTag>
         ))}
       </TagContainer>
@@ -145,17 +139,17 @@ const Search = () => {
               ></input>
             ) : (
               <SearchTagContainer>
-                {postTags.map((tagName) => (
+                {Object.values(postTags).map(({ name: tagName, id }) => (
                   <NavTag
-                    key={tagName}
+                    key={id}
                     className="tag"
                     as="button"
-                    isSelected={tags.includes(tagName)}
+                    isSelected={tagIds.includes(id)}
                     onClick={() =>
-                      setTags((prev) =>
-                        prev.includes(tagName)
-                          ? prev.filter((current) => current != tagName)
-                          : [...prev, tagName]
+                      setTagIds((prev) =>
+                        prev.includes(id)
+                          ? prev.filter((current) => current != id)
+                          : [...prev, id]
                       )
                     }
                   >

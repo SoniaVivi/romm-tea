@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import DropdownButton from "../shared/dropdown/DropdownButton";
 import DropdownContainer from "../shared/dropdown/DropdownContainer";
 import PostForm from "./PostForm";
-import sendAjaxRequest from "../shared/sendAjaxRequest";
-import { addPosts } from "./postSlice";
 import onOutsideClick from "../shared/onOutsideClick";
+import usePosts from "./hooks/usePosts";
+import { useUpdatePostMutation } from "../redux/postSlice";
 
 const ContainerSize = 25;
 
@@ -59,18 +59,17 @@ const MenuButton = styled(DropdownButton)`
 
 const OptionsContainer = (props) => {
   const [mode, setMode] = useState("");
-  const postData = useSelector((state) => state.post.posts[props.postId]);
+  const {
+    data: { data: postData },
+  } = usePosts({
+    selectFromResult: ({ data }) => ({ data: data?.entities[props.postId] }),
+  });
   const userName = useSelector((state) => state.user.name);
-  const dispatch = useDispatch();
-  const editPost = (data) =>
-    sendAjaxRequest("GET", `/posts/${postData.id}/edit`, data).then(
-      (response) => {
-        if (response.success) {
-          dispatch(addPosts(response.post));
-          setMode("");
-        }
-      }
-    );
+  const updatePost = useUpdatePostMutation()[0];
+  const editPost = (data) => {
+    updatePost({ id: props.postId, data });
+    setMode("");
+  };
 
   return (
     <Container>

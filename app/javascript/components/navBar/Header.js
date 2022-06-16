@@ -3,11 +3,11 @@ import styled from "styled-components";
 import HeaderUserForm from "../users/HeaderUserForm";
 import { NavOption } from "./navChildren/NavOption";
 import ThemeToggle from "../styled/ThemeToggle";
-import usePostIds from "../posts/hooks/usePostIds";
 import NavCreatePost from "./navChildren/NavCreatePost";
 import Search from "./navChildren/Search";
 import Timer from "./Timer";
 import PriceMenu from "./navChildren/PriceMenu";
+import usePosts from "../posts/hooks/usePosts";
 
 const childPadding = "10px";
 
@@ -42,8 +42,8 @@ const SortButton = styled.button`
   }
 `;
 
-const PostHeader = () => {
-  const { sort: currentSort, setSort } = usePostIds();
+const Header = () => {
+  const { sort: currentSort, setSort } = usePosts({ skip: true });
   const isSelected = (match) => (match == currentSort ? "selected" : null);
 
   const setPostsSort = (sort) => () => {
@@ -80,4 +80,4 @@ const PostHeader = () => {
   );
 };
 
-export default PostHeader;
+export default Header;

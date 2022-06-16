@@ -8,7 +8,7 @@ const Index = (props) => {
   return (
     <StoreWrapper>
       <ThemeWrapper>
-        <PostIndex {...props} />
+        <PostIndex userName={props.userName || ""} />
       </ThemeWrapper>
     </StoreWrapper>
   );
@@ -17,5 +17,5 @@ const Index = (props) => {
 export default Index;
 
 Index.propTypes = {
-  posts: PropTypes.array.isRequired,
+  userName: PropTypes.string,
 };

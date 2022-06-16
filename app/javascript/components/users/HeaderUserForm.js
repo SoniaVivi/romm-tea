@@ -10,7 +10,7 @@ import sendAjaxRequest from "../shared/sendAjaxRequest";
 import Login from "./modalPages/Login";
 import Signup from "./modalPages/Signup";
 import { setUserName } from "./userSlice";
-import { setFilters } from "../posts/postSlice";
+import { setFilters } from "../redux/optionSlice";
 import ExitButton from "../shared/ExitButton";
 
 const personIconSize = 25;
@@ -70,7 +70,7 @@ const HeaderUserForm = () => {
         onClick={() => toggleModal() || dispatch(setFilters())}
       >
         <PersonIcon link={person} />
-        <a href={`/user/${userName}`}>{userName}</a>
+        <a onClick={() => (location.href = `/user/${userName}`)}>{userName}</a>
         <DropdownContainer>
           <DropdownButton
             className="hover"

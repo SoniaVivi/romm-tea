@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import postsReducer from "../posts/postSlice";
 import usersReducer from "../users/userSlice";
+import optionReducer from "./optionSlice";
+import { postSlice } from "./postSlice";
 
 export default configureStore({
   reducer: {
-    post: postsReducer,
+    [postSlice.reducerPath]: postSlice.reducer,
     user: usersReducer,
+    option: optionReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(postSlice.middleware),
 });

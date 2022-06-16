@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useReducer } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { NavOption } from "./NavOption";
-import sendAjaxRequest from "../../shared/sendAjaxRequest";
 import PostForm from "../../posts/PostForm";
-import { addPosts } from "../../posts/postSlice";
+import { useCreatePostMutation } from "../../redux/postSlice";
 
 const HeaderContainer = styled(NavOption)`
   align-self: center;
@@ -23,16 +22,15 @@ const StyledButton = styled.button`
 
 const NavCreatePost = () => {
   const isLoggedIn = useSelector((state) => !!state.user.name.length);
-  const [showModal, setShowModal] = useState(false);
-  const toggleModal = () => setShowModal((prev) => !prev);
-  const dispatch = useDispatch();
-  const submitPost = (data) =>
-    sendAjaxRequest("POST", "/posts", data).then((response) => {
-      if (response.success) {
-        dispatch(addPosts(response.post));
-        toggleModal();
-      }
-    });
+  const [showModal, toggleModal] = useReducer((state) => !state, false);
+  const [createPost, createPostResult] = useCreatePostMutation();
+  const submitPost = (data) => createPost(data);
+
+  useEffect(() => {
+    !createPostResult.isUnitialized ? console.log(createPostResult) : null;
+    if (createPostResult.isSuccess) toggleModal();
+  }, [createPostResult]);
+
   if (!isLoggedIn) {
     return null;
   }

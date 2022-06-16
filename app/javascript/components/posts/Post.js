@@ -14,6 +14,7 @@ import Tag from "../styled/Tag";
 import PublicEye from "svgs/eye.svg";
 import PrivateEye from "svgs/eyeSlash.svg";
 import VoteField from "./postChildren/VoteField";
+import usePosts from "./hooks/usePosts";
 
 const PostBody = styled.div`
   position: relative;
@@ -89,7 +90,9 @@ const IconWrapper = styled.div`
 
 const Post = (props) => {
   const currentUser = useSelector((state) => state.user.name);
-  const data = useSelector((state) => state.post.posts[props.id]);
+  const { data } = usePosts({
+    selectFromResult: ({ data }) => data?.entities[props.id],
+  });
 
   if (!data) {
     return <PostBody></PostBody>;

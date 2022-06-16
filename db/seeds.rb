@@ -13,9 +13,20 @@ test_user =
               name: 'test_user_555'
 
 tags =
-  ['Green Tea', 'Expensive', 'Umami', 'Cloudy'].map! do |name|
-    Tag.create!(name: name)
-  end
+  [
+    'Green Tea',
+    'Expensive',
+    'Umami',
+    'Cloudy',
+    'Black Tea',
+    'Aged',
+  ].map! { |name| Tag.create!(name: name) }
+
+second_user =
+  User.create email: 'second@second.com',
+              password: 'second_pass',
+              password_confirmation: 'second_pass',
+              name: 'Seconded'
 
 i = 0
 
@@ -49,14 +60,14 @@ i = 0
       link: 'example.com',
     },
   ] * 12
-).each do |post_data|
+).each_with_index do |post_data, i|
   post =
     Post.create!(
       temperature: post_data[:temperature],
       rating: post_data[:rating],
       price: post_data[:price],
       notes: post_data[:notes],
-      name: post_data[:name],
+      name: post_data[:name] + i.to_s,
       link: post_data[:link],
       poster_id: test_user.id,
       is_public: (i % 4 != 0),
@@ -68,3 +79,22 @@ i = 0
   rand(tags.length + 1).times { |i| PostTag.create!(tag: tags[i], post: post) }
   i += 1
 end
+
+second_user_post =
+  Post.create!(
+    temperature: 5,
+    rating: 4,
+    price: 5,
+    notes: 'Absolutely fantastic black tea',
+    name: 'Best black tea',
+    link: 'example.com',
+    poster_id: second_user.id,
+    is_public: true,
+    temp_unit: 'celsius',
+    leaf_quantity: '5g',
+    water_quantity: '50ml',
+    time: %w[15 30 45],
+  )
+
+PostTag.create!(tag: tags[-2], post: second_user_post)
+PostTag.create!(tag: tags[-1], post: second_user_post)

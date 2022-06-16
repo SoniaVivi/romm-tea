@@ -1,4 +1,3 @@
-<%= react_component("UserShow",
-                    {posts: @posts,
-                     currentUserName: user_signed_in? ? current_user.name : ""},
+<%= react_component("Index",
+                    {userName: user_signed_in? ? current_user.name : ""},
                     class: "container") %>

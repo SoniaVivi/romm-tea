@@ -4,4 +4,8 @@ class Tag < ApplicationRecord
 
   has_many :post_tags
   has_many :posts, through: :post_tags
+
+  def get_data
+    { id: id, name: name }
+  end
 end

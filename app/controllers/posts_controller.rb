@@ -2,13 +2,13 @@ require 'json'
 
 class PostsController < ApplicationController
   def index
-    @posts =
-      Post
-        .where(is_public: true)
-        .or(Post.where(is_public: nil))
-        .order(created_at: :asc)
-        .limit(50)
-        .map { |post| post.get_data(current_user_id) }
+    respond_to do |format|
+      format.html
+      format.json do
+        index_json
+        render json: @posts
+      end
+    end
   end
   def create
     return render json: { success: false } if !user_signed_in?
@@ -50,6 +50,22 @@ class PostsController < ApplicationController
 
   private
 
+  def index_json
+    permitted_params = index_params
+    @posts =
+      Post
+        .get_posts(
+          order_by: get_sort_order(permitted_params[:sort_order]),
+          tags: permitted_params[:tags],
+          title: permitted_params[:title],
+        )
+        .limit(50)
+        .map { |post| post.get_data(current_user_id) }
+        .to_json
+  end
+  def index_params
+    params.permit(:sort_order, :title, tags: [])
+  end
   def create_and_edit_params
     params.permit(:formData, :tags, :id, :is_public)
   end

@@ -44,7 +44,9 @@ const Circle = styled.div`
 const ThemeToggle = () => {
   const theme = useSelector((state) => state.user.theme);
   const dispatch = useDispatch();
-
+  // "Uncaught SyntaxError: missing ] after element list" occurs when toggling theme
+  // Adding a try-catch statement removes this error, however it significantly
+  // Increases latency on click
   return (
     <Container onClick={() => setTimeout(dispatch(toggleTheme()), 200)}>
       <Icon link={moon} size={iconSize} />
