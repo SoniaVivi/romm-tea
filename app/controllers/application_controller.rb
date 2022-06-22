@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   def get_sort_order(sort_order_string)
     case sort_order_string
     when 'old'
-      { created_at: :desc }
+      { created_at: :asc }
     when 'top'
       { rating: :desc }
     when 'high-low'
@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     when 'low-high'
       { price: :asc }
     else
-      { created_at: :asc }
+      { created_at: :desc }
     end
   end
 end
