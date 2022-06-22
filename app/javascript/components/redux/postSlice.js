@@ -18,7 +18,7 @@ export const postSlice = createApi({
   reducerPath: "post",
   baseQuery: fetchBaseQuery({
     //eslint-disable-next-line no-undef
-    baseUrl: "http://localhost:3000/",
+    baseUrl: "https://romm-tea.herokuapp.com",
     prepareHeaders: (headers) => {
       headers.set("accept", "application/json");
       headers.set("X-CSRF-Token", authenticityToken);
