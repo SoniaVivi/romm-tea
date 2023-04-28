@@ -17,8 +17,7 @@ const isUserShowRoute = document.location.toString().includes("/user/");
 export const postSlice = createApi({
   reducerPath: "post",
   baseQuery: fetchBaseQuery({
-    //eslint-disable-next-line no-undef
-    baseUrl: "https://romm-tea.herokuapp.com",
+    baseUrl: window.location.origin,
     prepareHeaders: (headers) => {
       headers.set("accept", "application/json");
       headers.set("X-CSRF-Token", authenticityToken);

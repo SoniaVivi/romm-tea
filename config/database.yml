@@ -84,3 +84,4 @@ production:
   database: romm_tea_production
   username: romm_tea
   password: <%= ENV['ROMM_TEA_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
