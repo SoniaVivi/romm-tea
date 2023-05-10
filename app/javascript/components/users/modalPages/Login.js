@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { FormActionButton } from "../../shared/formComponents/FormActionButton";
 import { TextForm } from "../../shared/formComponents/TextForm";
 import { PageLink } from "../../shared/formComponents/PageLink";
-import sendAjaxRequest from "../../shared/sendAjaxRequest";
 import { useDispatch } from "react-redux";
 import { setUserName } from "../userSlice";
 
@@ -15,7 +14,16 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
   const sendFormData = () =>
-    sendAjaxRequest("POST", "/users/sign_in", userInfo)
+    fetch("/users/sign_in", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('[name="csrf-token"]').content,
+      },
+      body: JSON.stringify(userInfo),
+    })
+      .then((response) => response.json())
       .then((response) => {
         if (response?.name.length) {
           dispatch(setUserName(response.name));
@@ -24,7 +32,6 @@ const Login = (props) => {
       })
       .catch((e) => {
         console.log(e);
-        props.toggleModal();
       });
 
   return (

@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { TextForm } from "../../shared/formComponents/TextForm";
 import { PageLink } from "../../shared/formComponents/PageLink";
 import { FormActionButton } from "../../shared/formComponents/FormActionButton";
-import sendAjaxRequest from "../../shared/sendAjaxRequest";
 import { setUserName } from "../userSlice";
 
 const Signup = (props) => {
@@ -63,16 +62,36 @@ const Signup = (props) => {
           ) {
             return;
           }
-          sendAjaxRequest("POST", "/users", userInfo)
+          fetch("/users", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "X-CSRF-Token": document.querySelector('[name="csrf-token"]')
+                .content,
+            },
+            body: JSON.stringify(userInfo),
+          })
+            .then((r) => r.json())
             .then((response) => {
               if (response?.name.length) {
                 dispatch(setUserName(response.name));
-                sendAjaxRequest("POST", "/users/sign_in", {
-                  email: userInfo.email,
-                  password: userInfo.password,
+                fetch("/users/sign_in", {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    "X-CSRF-Token": document.querySelector(
+                      '[name="csrf-token"]'
+                    ).content,
+                  },
+                  body: JSON.stringify({
+                    email: userInfo.email,
+                    password: userInfo.password,
+                  }),
                 });
               } else {
-                console.log(response);
+                console.log("X", response);
               }
             })
             .catch((e) => console.log(e))

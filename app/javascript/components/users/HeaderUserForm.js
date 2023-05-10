@@ -6,7 +6,6 @@ import DropdownButton from "../shared/dropdown/DropdownButton";
 import DropdownContainer from "../shared/dropdown/DropdownContainer";
 import { Icon } from "../shared/Icon";
 import { NavOption } from "../navBar/navChildren/NavOption";
-import sendAjaxRequest from "../shared/sendAjaxRequest";
 import Login from "./modalPages/Login";
 import Signup from "./modalPages/Signup";
 import { setUserName } from "./userSlice";
@@ -75,7 +74,13 @@ const HeaderUserForm = () => {
           <DropdownButton
             className="hover"
             onClick={() =>
-              sendAjaxRequest("DELETE", "/users/sign_out", "")
+              fetch("/users/sign_out", {
+                method: "DELETE",
+                headers: {
+                  "X-CSRF-Token": document.querySelector('[name="csrf-token"]')
+                    .content,
+                },
+              })
                 .then(() => dispatch(setUserName()))
                 .catch((error) => console.log(error))
             }
